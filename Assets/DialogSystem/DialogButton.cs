@@ -16,6 +16,7 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Button start");
          m_TextComponent = GetComponent<Text>();
     }
 
@@ -37,6 +38,7 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
 
     public void SetOption(string text, DialogOptionKey key)
     {
+        Debug.Log("SetOption: " + text);
         m_Text = text;
         m_Key = key;
         gameObject.SetActive(true);
@@ -46,6 +48,7 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
 
     public void UpdateText()
     {
-        m_TextComponent.text = m_Text;
+        Debug.Log("UpdateText: " + m_Text);
+        GetComponent<Text>().text = m_Text;
     }
 }

@@ -17,7 +17,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
         [SerializeField] private float m_GravityMultiplier;
-        [SerializeField] private MouseLook m_MouseLook;
+        [SerializeField] public MouseLook m_MouseLook;
         [SerializeField] private bool m_UseFovKick;
         [SerializeField] private FOVKick m_FovKick = new FOVKick();
         [SerializeField] private bool m_UseHeadBob;
@@ -27,6 +27,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        public bool m_EnableMouseLook = true;
+        public bool m_DisableMovement = false;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -65,7 +67,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                if (!m_DisableMovement)
+                {
+                    m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                }
             }
 
             if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
@@ -130,7 +135,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
 
-            m_MouseLook.UpdateCursorLock();
+            if (m_EnableMouseLook)
+            {
+                m_MouseLook.UpdateCursorLock();
+            }
         }
 
 
@@ -207,6 +215,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
 
+            if (m_DisableMovement)
+            {
+                horizontal = 0.0f;
+                vertical = 0.0f;
+            }
+
             bool waswalking = m_IsWalking;
 
 #if !MOBILE_INPUT
@@ -236,7 +250,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+            if (m_EnableMouseLook)
+            {
+                m_MouseLook.LookRotation (transform, m_Camera.transform);
+            }
         }
 
 
