@@ -7,34 +7,45 @@ using UnityEngine.EventSystems;
 public class DialogButton : MonoBehaviour, IPointerClickHandler
 {
     public DialogSystem m_System;
+    public int m_Index;
+    public DialogOptionKey m_Key;
+
+    private Text m_TextComponent;
+    private string m_Text;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void OnClick()
-    {
-        Debug.Log("OnCLick!");
+         m_TextComponent = GetComponent<Text>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("OnPointerClick");
-        m_System.TaskOnClick();
-        //m_Reply.text = "This is my reply";
-        //enemyHealth -= 1;
+        m_System.HandleDialogOption(m_Key);
     }
 
     public void Register(DialogSystem dialogSystem)
     {
         m_System = dialogSystem;
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void SetOption(string text, DialogOptionKey key)
+    {
+        m_Text = text;
+        m_Key = key;
+        gameObject.SetActive(true);
+
+        UpdateText();
+    }
+
+    public void UpdateText()
+    {
+        m_TextComponent.text = m_Text;
     }
 }
