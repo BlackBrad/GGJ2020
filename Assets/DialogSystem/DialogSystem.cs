@@ -33,6 +33,11 @@ public struct DialogState
     public List<DialogOptionKey> options;
     // Dialog options
     // Modifier
+    public DialogState(string _reply)
+    {
+        reply = _reply;
+        options = new List<DialogOptionKey>();
+    }
 };
 
 public class DialogSystem : MonoBehaviour
@@ -46,28 +51,19 @@ public class DialogSystem : MonoBehaviour
 
     public List<DialogButton> m_DialogButtons = new List<DialogButton>();
 
-    public int enemyHealth = 2;
-
-    public Button m_FirstButton;
     public Text m_Reply;
 
     // Start is called before the first frame update
     void Start()
     {
-        DialogState introState = new DialogState();
-        introState.options = new List<DialogOptionKey>();
-        introState.reply = "Woe is me!";
+        DialogState introState = new DialogState("Woe is me!");
         introState.options.Add(DialogOptionKey.DoYouLikeYourself);
         introState.options.Add(DialogOptionKey.HaveYouEverHadADream);
 
-        DialogState test1State = new DialogState();
-        test1State.options = new List<DialogOptionKey>();
-        test1State.reply = "Always questions";
+        DialogState test1State = new DialogState("Always questions");
         test1State.options.Add(DialogOptionKey.LeaveThatToasterAlone);
 
-        DialogState test2State = new DialogState();
-        test2State.options = new List<DialogOptionKey>();
-        test2State.reply = "That you, you, could, could do, .asdadsfsdf";
+        DialogState test2State = new DialogState("That you, you, could, could do, .asdadsfsdf");
         test2State.options.Add(DialogOptionKey.ErrorError);
 
         m_States.Add(DialogStateKey.Intro, introState);
