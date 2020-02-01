@@ -12,9 +12,12 @@ public enum PlayerState
 
 public class PlayerStateManager : MonoBehaviour
 {
+    public float m_InteractionRange = 1.5f;
     public PlayerState m_State;
     private GameObject m_UiCanvas;
     private FirstPersonController m_FirstPersonController;
+
+    public static PlayerStateManager m_Instance = null;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,7 @@ public class PlayerStateManager : MonoBehaviour
         m_FirstPersonController = this.transform.parent.GetComponent<FirstPersonController>();
         m_UiCanvas = GameObject.FindWithTag("ui_canvas");
         SetState(PlayerState.Moving);
+        m_Instance = this;
     }
 
     // Update is called once per frame
@@ -29,14 +33,21 @@ public class PlayerStateManager : MonoBehaviour
     {
         if (CrossPlatformInputManager.GetButtonDown("Interact"))
         {
-            if (m_State == PlayerState.Moving)
+            RaycastHit hit;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, m_InteractionRange, Physics.DefaultRaycastLayers))
             {
-                SetState(PlayerState.Speaking);
+                Appliance appliance = hit.collider.gameObject.GetComponent<Appliance>();
+                if (appliance != null)
+                {
+                    Debug.Log("Hit appliance");
+                    if (m_State == PlayerState.Moving)
+                    {
+                        SetState(PlayerState.Speaking);
+                    }
+                }
             }
-            else
-            {
-                SetState(PlayerState.Moving);
-            }
+
         }
     }
 
