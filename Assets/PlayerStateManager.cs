@@ -16,6 +16,7 @@ public class PlayerStateManager : MonoBehaviour
     public PlayerState m_State;
     private GameObject m_UiCanvas;
     private FirstPersonController m_FirstPersonController;
+    private FacePlayer m_Facer = null;
 
     public static PlayerStateManager m_Instance = null;
 
@@ -46,6 +47,11 @@ public class PlayerStateManager : MonoBehaviour
                     {
                         SetState(PlayerState.Speaking);
                         DialogSystem.m_Instance.SetState(appliance.m_StartingState);
+                        m_Facer = appliance.GetComponent<FacePlayer>();
+                        if (m_Facer != null)
+                        {
+                            m_Facer.m_IsActive = true;
+                        }
                     }
                 }
             }
@@ -64,6 +70,11 @@ public class PlayerStateManager : MonoBehaviour
             m_FirstPersonController.m_DisableMovement = false;
             m_FirstPersonController.m_MouseLook.SetCursorLock(true);
             m_FirstPersonController.m_MouseLook.UpdateCursorLock();
+
+            if (m_Facer != null)
+            {
+                m_Facer.m_IsActive = false;
+            }
         }
         else if (state == PlayerState.Speaking)
         {
