@@ -174,6 +174,11 @@ public class DialogSystem : MonoBehaviour
 
     public GameObject m_TaskUIPrefab;
 
+    public bool HasTask(ApplianceKey key)
+    {
+        return m_TaskStates.ContainsKey(key);
+    }
+
     public void AddTask(ApplianceKey key, string text)
     {
         if (m_TaskLayoutGroup == null)
@@ -452,14 +457,17 @@ public class DialogSystem : MonoBehaviour
         
         DialogState tvEmpath1f = new DialogState("WE CANT BELIEVE YOU WOULD DO THIS TO US");
         DialogState tvEmpath1s = new DialogState("Perhaps there is more to see of the world than our cockroach communions here. They sing wonderful hymns, you know."); 
+        tvEmpath1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
 
         DialogState tvEmpath2s = new DialogState("The fax machine always made the world sound so exciting. Maybe those 'Preppers' have the right idea.");
         DialogState tvEmpath2f = new DialogState("Atleast you have memories! The only joy we have in life is watching the microwave explode herring on Seafood Sunday.");
 
         DialogState tvSeduction1s = new DialogState("Would you really!? Oh to see a real city! To meet real people! [incomprehensible crackly mumbling] You will take us diving; oh we will need new flippers");
+        tvSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
         DialogState tvSeduction1f = new DialogState("Are you insane? Some sweaty wannabe repairman? You'd probably dump us in the river or lock us in some hideous mancave. Get out of our house, bourgeoisie");
 
         DialogState tvMechanical1s = new DialogState("What? What are you... Oh. Ohhhh okay, I felt something pop but in like.. a good way.");
+        tvMechanical1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
         DialogState tvMechanical1f = new DialogState("What in the sweet loving of fuck do you think you're doing! Get off of me!");
         DialogState tvMechanical1f2 = new DialogState("[The TV is screaming 'TILT' repeatedly. Time to disengage with this situation]");
 

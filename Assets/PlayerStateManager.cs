@@ -62,10 +62,12 @@ public class PlayerStateManager : MonoBehaviour
                     Door door = hit.collider.gameObject.GetComponent<Door>();
                     if (door != null)
                     {
-                        DialogSystem.m_Instance.SetTaskState(
-                            ApplianceKey.Door, TaskState.Completed);
-                        if (DialogSystem.m_Instance.AreAllTasksComplete())
+                        if (DialogSystem.m_Instance.AreAllTasksComplete() ||
+                                DialogSystem.m_Instance.HasTask(ApplianceKey.Door))
                         {
+                            DialogSystem.m_Instance.SetTaskState(
+                                    ApplianceKey.Door, TaskState.Completed);
+
                             SetState(PlayerState.Speaking);
                             // Enable fade out and change to main menu
                             SceneManager.LoadScene("Scenes/MainMenu", LoadSceneMode.Single);
