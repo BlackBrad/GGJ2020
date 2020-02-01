@@ -296,16 +296,21 @@ public class DialogSystem : MonoBehaviour
         faxSeduction2Option.statCheck = DialogOption.CompareA;
 
 
-        DialogOption faxMechanical1Option = new DialogOption("Make a subtle attempt at seduction", DialogStateKey.faxMechanicalState);
+        DialogOption faxMechanical1Option = new DialogOption("Make a subtle attempt to check the toner", DialogStateKey.faxMechanicalState);
         faxMechanical1Option.success = DialogStateKey.faxMechanical1s;
         faxMechanical1Option.failure = DialogStateKey.faxMechanical1f;
         faxMechanical1Option.statCheck = DialogOption.CompareA;
 
 
-        DialogOption faxMechanical2Option = new DialogOption("Curl the phone cord around your finger", DialogStateKey.faxMechanicalState);
+        DialogOption faxMechanical2Option = new DialogOption("Try turning it on and off again", DialogStateKey.faxMechanicalState);
         faxMechanical2Option.success = DialogStateKey.faxMechanical2s;
         faxMechanical2Option.failure = DialogStateKey.faxMechanical2f;
         faxMechanical2Option.statCheck = DialogOption.CompareA;
+
+        DialogOption leaveThat = new DialogOption( "Cheese it!", DialogStateKey.faxIntroState);
+        leaveThat.triggerExit = true;
+
+        faxState1.options.Add(leaveThat);
 
         faxEmpathyState.options.Add(faxEmpathy1Option);
         faxEmpathyState.options.Add(faxEmpathy2Option);
