@@ -72,6 +72,7 @@ public class PlayerStateManager : MonoBehaviour
             m_FirstPersonController.m_DisableMovement = false;
             m_FirstPersonController.m_MouseLook.SetCursorLock(true);
             m_FirstPersonController.m_MouseLook.UpdateCursorLock();
+            Debug.Log("SetState moving");
 
             if (m_Facer != null)
             {
@@ -91,6 +92,7 @@ public class PlayerStateManager : MonoBehaviour
             m_FirstPersonController.m_DisableMovement = true;
             m_FirstPersonController.m_MouseLook.SetCursorLock(false);
             m_FirstPersonController.m_MouseLook.UpdateCursorLock();
+            Debug.Log("SetState speaking");
         }
 
         m_State = state;
