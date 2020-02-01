@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 public enum PlayerState
 {
@@ -53,6 +54,21 @@ public class PlayerStateManager : MonoBehaviour
                         if (m_Facer != null)
                         {
                             m_Facer.RotateToPlayer();
+                        }
+                    }
+                }
+                else
+                {
+                    Door door = hit.collider.gameObject.GetComponent<Door>();
+                    if (door != null)
+                    {
+                        DialogSystem.m_Instance.SetTaskState(
+                            ApplianceKey.Door, TaskState.Completed);
+                        if (DialogSystem.m_Instance.AreAllTasksComplete())
+                        {
+                            SetState(PlayerState.Speaking);
+                            // Enable fade out and change to main menu
+                            SceneManager.LoadScene("Scenes/MainMenu", LoadSceneMode.Single);
                         }
                     }
                 }

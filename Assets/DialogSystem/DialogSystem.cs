@@ -125,6 +125,7 @@ public enum ApplianceKey
     FaxMachine,
     Microwave,
     TV,
+    Door,
 };
 
 public class DialogSystem : MonoBehaviour
@@ -153,13 +154,21 @@ public class DialogSystem : MonoBehaviour
 
     public GameObject m_TaskUIPrefab;
 
-    public void AddTask(ApplianceKey key, string name)
+    public void AddTask(ApplianceKey key, string text)
     {
+        if (m_TaskLayoutGroup == null)
+        {
+            m_TaskLayoutGroup = GameObject.FindWithTag("task_layout_group");
+        }
+        Debug.Assert(m_TaskLayoutGroup != null);
         GameObject task = Instantiate(m_TaskUIPrefab, m_TaskLayoutGroup.transform);
+
         TaskUI ui = task.GetComponent<TaskUI>();
         Debug.Assert(ui != null);
-        ui.m_ApplianceName = name;
+        ui.m_ApplianceName = text;
         m_TaskUIList.Add(key, ui);
+
+        m_TaskStates.Add(key, TaskState.Incomplete);
     }
 
     public void SetTaskState(ApplianceKey key, TaskState state)
@@ -169,11 +178,21 @@ public class DialogSystem : MonoBehaviour
 
         m_TaskStates[key] = state;
         m_TaskUIList[key].SetState(state);
+
+        if (AreAllTasksComplete())
+        {
+            Debug.Log("All tasks completed");
+            if (!m_TaskStates.ContainsKey(ApplianceKey.Door))
+            {
+                AddTask(ApplianceKey.Door, "Leave");
+            }
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("DialogSystem start");
         m_Instance = this;
 
         foreach (var button in m_DialogButtons)
@@ -184,18 +203,30 @@ public class DialogSystem : MonoBehaviour
         m_TaskLayoutGroup = GameObject.FindWithTag("task_layout_group");
         Debug.Assert(m_TaskLayoutGroup != null);
 
-        m_TaskStates.Add(ApplianceKey.FaxMachine, TaskState.Incomplete);
-        m_TaskStates.Add(ApplianceKey.Microwave, TaskState.Incomplete);
-        m_TaskStates.Add(ApplianceKey.TV, TaskState.Incomplete);
-
-        AddTask(ApplianceKey.FaxMachine, "fax machine");
-        AddTask(ApplianceKey.Microwave, "microwave");
-        AddTask(ApplianceKey.TV, "TV");
+        AddTask(ApplianceKey.FaxMachine, "Repair the fax machine");
+        //AddTask(ApplianceKey.Microwave, "Repair the microwave");
+        //AddTask(ApplianceKey.TV, "Repair the TV");
 
         GenerateFaxMachineDialogTree();
 
         SetState(DialogStateKey.faxIntroState);
 
+    }
+
+    public bool AreAllTasksComplete()
+    {
+        bool result = true;
+        foreach (var taskState in m_TaskStates)
+        {
+            if (taskState.Value == TaskState.Incomplete)
+            {
+                result = false;
+                Debug.Log("Task incomplete " + taskState.Key);
+                break;
+            }
+        }
+
+        return result;
     }
 
     public void HandleDialogOption(DialogOption option)

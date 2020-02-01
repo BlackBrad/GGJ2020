@@ -27,7 +27,7 @@ public class TaskUI : MonoBehaviour
         SetState(m_State);
     }
 
-    public static string BuildString(string name, TaskState state)
+    public static string BuildString(string text, TaskState state)
     {
         string stateName = "";
         switch (state)
@@ -45,7 +45,7 @@ public class TaskUI : MonoBehaviour
                 break;
         }
 
-        return "- Repair " + name + stateName;
+        return "- " + text + " " + stateName;
     }
 
     public void SetState(TaskState state)
