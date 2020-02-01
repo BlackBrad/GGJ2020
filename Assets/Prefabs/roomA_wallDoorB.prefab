@@ -98,7 +98,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: 4e5e354991e14124f825878e31e08180, type: 3}
       propertyPath: m_Name
-      value: roomA_wallDoorB_mdl Variant
+      value: roomA_wallDoorB
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 4e5e354991e14124f825878e31e08180, type: 3}
       propertyPath: m_LocalPosition.x
@@ -148,6 +148,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c6da57cb4cb8a3e4e9fb2ca128404d93, type: 2}
+    - target: {fileID: 2300000, guid: 4e5e354991e14124f825878e31e08180, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2300002, guid: 4e5e354991e14124f825878e31e08180, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -156,10 +160,18 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0bff6abd69cfcf34c9fa14e29bcfb174, type: 2}
+    - target: {fileID: 2300002, guid: 4e5e354991e14124f825878e31e08180, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2300004, guid: 4e5e354991e14124f825878e31e08180, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8103ecdafd830f946a0ea36ac3c16b6a, type: 2}
+    - target: {fileID: 2300004, guid: 4e5e354991e14124f825878e31e08180, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e5e354991e14124f825878e31e08180, type: 3}
 --- !u!4 &4232050633275391279 stripped
