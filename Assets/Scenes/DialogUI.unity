@@ -780,7 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfba11af498acd54e975344a7c628f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CurrentState: 0
+  m_CurrentState: 1
   m_DialogButtons:
   - {fileID: 1239551100}
   - {fileID: 737254144}
