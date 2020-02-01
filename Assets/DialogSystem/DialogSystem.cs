@@ -24,7 +24,27 @@ public enum DialogStateKey
     faxMechanical1f, 
     faxMechanical1s, 
     faxMechanical2f, 
-    faxMechanical2s
+    faxMechanical2s,
+    tvIntroState,
+    tvState1, 
+    tvEmpathyState, 
+    tvSeductionState,
+    tvMechanicalState, 
+    tvEmpath1f,
+    tvEmpath1s,
+    tvEmpath2f,
+    tvEmpath2s,
+    tvSeduction1f, 
+    tvSeduction1s, 
+    tvSeduction2f, 
+    tvSeduction2s, 
+    tvMechanical1f,
+    tvMechanical1f2,
+    tvMechanical1s, 
+    tvMechanical2f, 
+    tvMechanical2s,
+    tvMechanical2f2, 
+    tvMechanical2s2
 };
 
 public enum DialogOptionKey
@@ -67,7 +87,7 @@ public struct DialogOption
         text = _text;
         triggerExit = false;
         success = _next;
-        failure = DialogStateKey.faxIntroState;
+        failure = _next;
         statCheck = IgnoreStatCheck;
     }
 };
@@ -205,9 +225,10 @@ public class DialogSystem : MonoBehaviour
 
         AddTask(ApplianceKey.FaxMachine, "Repair the fax machine");
         //AddTask(ApplianceKey.Microwave, "Repair the microwave");
-        //AddTask(ApplianceKey.TV, "Repair the TV");
+        AddTask(ApplianceKey.TV, "Repair the TV");
 
         GenerateFaxMachineDialogTree();
+        GenerateTvDialogTree();
 
         SetState(DialogStateKey.faxIntroState);
 
@@ -350,6 +371,7 @@ public class DialogSystem : MonoBehaviour
         faxState1.options.Add(faxMechanicalOption);
 
         DialogOption faxChoiceReturn = new DialogOption("[Continue...]", DialogStateKey.faxState1);
+        faxChoiceReturn.triggerExit = true;
 
         DialogOption faxEmpathy1Option = new DialogOption("Remind the fax machine that it is loved", DialogStateKey.faxEmpathyState);
         faxEmpathy1Option.success = DialogStateKey.faxEmpath1s;
@@ -370,7 +392,7 @@ public class DialogSystem : MonoBehaviour
 
         DialogOption faxSeduction2Option = new DialogOption("Curl the phone cord around your finger", DialogStateKey.faxSeductionState);
         faxSeduction2Option.success = DialogStateKey.faxSeduction2s;
-        faxSeduction2Option.failure = DialogStateKey.faxSeduction2s;
+        faxSeduction2Option.failure = DialogStateKey.faxSeduction2f;
         faxSeduction2Option.statCheck = DialogOption.CompareA;
 
 
@@ -416,6 +438,135 @@ public class DialogSystem : MonoBehaviour
         
         faxMechanical2f.options.Add(faxChoiceReturn);
         faxMechanical2s.options.Add(faxChoiceReturn);
+
+    }
+    private void GenerateTvDialogTree(){
+
+        DialogState tvIntroState = new DialogState("I wont surf for you! Not for one more minute! Not for one more second in this flat-pack prison! I demand vacation! We are workers united! We are the People!");
+        tvIntroState.recordGenerator = () => { return new DialogRecord("Melancholy Tv", false, -240); };
+
+        DialogState tvState1 = new DialogState("[The TV is screaming incoherently about workers rights. I hate dealing with people.]");
+
+        DialogState tvEmpathyState = new DialogState("What do the 'People' Need:");
+        DialogState tvSeductionState = new DialogState("What do the 'People' desire:");
+        DialogState tvMechanicalState = new DialogState("Lets try somethign more direct:");
+        
+        DialogState tvEmpath1f = new DialogState("WE CANT BELIEVE YOU WOULD DO THIS TO US");
+        DialogState tvEmpath1s = new DialogState("Perhaps there is more to see of the world than our cockroach communions here. They sing wonderful hymns, you know."); 
+
+        DialogState tvEmpath2s = new DialogState("The fax machine always made the world sound so exciting. Maybe those 'Preppers' have the right idea.");
+        DialogState tvEmpath2f = new DialogState("Atleast you have memories! The only joy we have in life is watching the microwave explode herring on Seafood Sunday.");
+
+        DialogState tvSeduction1s = new DialogState("Would you really!? Oh to see a real city! To meet real people! [incomprehensible crackly mumbling] You will take us diving; oh we will need new flippers");
+        DialogState tvSeduction1f = new DialogState("Are you insane? Some sweaty wannabe repairman? You'd probably dump us in the river or lock us in some hideous mancave. Get out of our house, bourgeoisie");
+
+        DialogState tvMechanical1s = new DialogState("What? What are you... Oh. Ohhhh okay, I felt something pop but in like.. a good way.");
+        DialogState tvMechanical1f = new DialogState("What in the sweet loving of fuck do you think you're doing! Get off of me!");
+        DialogState tvMechanical1f2 = new DialogState("[The TV is screaming 'TILT' repeatedly. Time to disengage with this situation]");
+
+        DialogState tvMechanical2s = new DialogState("[Once you start running your hand over the screen, you notice pieces of hardened filth all over it. You proceed to scrape them off]");
+        DialogState tvMechanical2s2 = new DialogState("Thank you, I guess. Now please find us a cloth.");
+        DialogState tvMechanical2f = new DialogState("[The screen is now a blurry smeared mess. he TV looks revolted and you feel disgusted at the pitiful state of your personal hygiene. You regret this.]");
+        DialogState tvMechanical2f2 = new DialogState("That was the most terrible thing that has ever happened to me.");
+
+
+        m_States.Add(DialogStateKey.tvIntroState, tvIntroState);
+        m_States.Add(DialogStateKey.tvState1, tvState1);
+        m_States.Add(DialogStateKey.tvEmpathyState, tvEmpathyState);
+        m_States.Add(DialogStateKey.tvSeductionState, tvSeductionState);
+        m_States.Add(DialogStateKey.tvMechanicalState, tvMechanicalState);
+        m_States.Add(DialogStateKey.tvEmpath1f, tvEmpath1f);
+        m_States.Add(DialogStateKey.tvEmpath1s, tvEmpath1s);
+        m_States.Add(DialogStateKey.tvEmpath2f, tvEmpath2f);
+        m_States.Add(DialogStateKey.tvEmpath2s, tvEmpath2s);
+        m_States.Add(DialogStateKey.tvSeduction1f, tvSeduction1f);
+        m_States.Add(DialogStateKey.tvSeduction1s, tvSeduction1s);
+        m_States.Add(DialogStateKey.tvMechanical1f2, tvMechanical1f2);
+        m_States.Add(DialogStateKey.tvMechanical1f, tvMechanical1f);
+        m_States.Add(DialogStateKey.tvMechanical1s, tvMechanical1s);
+        m_States.Add(DialogStateKey.tvMechanical2f, tvMechanical2f);
+        m_States.Add(DialogStateKey.tvMechanical2s, tvMechanical2s);
+        m_States.Add(DialogStateKey.tvMechanical2f2, tvMechanical2f2);
+        m_States.Add(DialogStateKey.tvMechanical2s2, tvMechanical2s2);
+
+        DialogOption tvIntroContinue = new DialogOption("[Continue...]", DialogStateKey.tvState1);
+        DialogOption tvMechanical1fContinue = new DialogOption("[Continue...]", DialogStateKey.tvMechanical1f2);
+        DialogOption tvMechanical2sContinue = new DialogOption("[Continue...]", DialogStateKey.tvMechanical2s2);
+        DialogOption tvMechanical2fContinue = new DialogOption("[Continue...]", DialogStateKey.tvMechanical2f2);
+
+        
+        tvIntroState.options.Add(tvIntroContinue);
+        tvMechanical1f.options.Add(tvMechanical1fContinue);
+        tvMechanical2s.options.Add(tvMechanical2sContinue);
+        tvMechanical2f.options.Add(tvMechanical2fContinue);
+        
+        DialogOption tvEmpathyOption = new DialogOption("Express desire for comradry", DialogStateKey.tvEmpathyState);
+        DialogOption tvSeductionOption = new DialogOption("Win their hearts, not their minds", DialogStateKey.tvSeductionState);
+        DialogOption tvMechanicalOption = new DialogOption("Machines can't form populus rebellions", DialogStateKey.tvMechanicalState);
+        
+        tvState1.options.Add(tvEmpathyOption);
+        tvState1.options.Add(tvSeductionOption);
+        tvState1.options.Add(tvMechanicalOption);
+
+        DialogOption tvChoiceReturn = new DialogOption("[Continue...]", DialogStateKey.tvState1);
+        tvChoiceReturn.triggerExit = true;
+
+        DialogOption tvEmpathy1Option = new DialogOption("Recommend your favorite TV shows, maybe it will cheer them up", DialogStateKey.tvEmpathyState);
+        tvEmpathy1Option.success = DialogStateKey.tvEmpath1s;
+        tvEmpathy1Option.failure = DialogStateKey.tvEmpath1f;
+        tvEmpathy1Option.statCheck = DialogOption.CompareA;
+
+
+        DialogOption tvEmpathy2Option = new DialogOption("Tell the 'People' about all the horrible things you've seen. That will scare them", DialogStateKey.tvEmpathyState);
+        tvEmpathy2Option.success = DialogStateKey.tvEmpath2s;
+        tvEmpathy2Option.failure = DialogStateKey.tvEmpath2f;
+        tvEmpathy2Option.statCheck = DialogOption.CompareA;
+
+
+        DialogOption tvSeduction1Option = new DialogOption("Promise to take the 'People' to paris", DialogStateKey.tvSeductionState);
+        tvSeduction1Option.success = DialogStateKey.tvSeduction1s;
+        tvSeduction1Option.failure = DialogStateKey.tvSeduction1f;
+        tvSeduction1Option.statCheck = DialogOption.CompareA;
+
+
+        DialogOption tvMechanical1Option = new DialogOption("Shake the TV enthusiastically", DialogStateKey.tvMechanicalState);
+        tvMechanical1Option.success = DialogStateKey.tvMechanical1s;
+        tvMechanical1Option.failure = DialogStateKey.tvMechanical1f;
+        tvMechanical1Option.statCheck = DialogOption.CompareA;
+
+
+        DialogOption tvMechanical2Option = new DialogOption("Run your greasy hands across the screen. Greasily.", DialogStateKey.tvMechanicalState);
+        tvMechanical2Option.success = DialogStateKey.tvMechanical2s;
+        tvMechanical2Option.failure = DialogStateKey.tvMechanical2f;
+        tvMechanical2Option.statCheck = DialogOption.CompareA;
+
+        DialogOption leaveThat = new DialogOption( "Scram!", DialogStateKey.tvIntroState);
+        leaveThat.triggerExit = true;
+
+        tvState1.options.Add(leaveThat);
+
+        tvEmpathyState.options.Add(tvEmpathy1Option);
+        tvEmpathyState.options.Add(tvEmpathy2Option);
+
+        tvSeductionState.options.Add(tvSeduction1Option);
+
+        tvMechanicalState.options.Add(tvMechanical1Option);
+        tvMechanicalState.options.Add(tvMechanical2Option);
+
+        tvEmpath1s.options.Add(tvChoiceReturn);
+        tvEmpath1f.options.Add(tvChoiceReturn);
+
+        tvEmpath2s.options.Add(tvChoiceReturn);
+        tvEmpath2f.options.Add(tvChoiceReturn);
+
+        tvSeduction1s.options.Add(tvChoiceReturn);
+        tvSeduction1f.options.Add(tvChoiceReturn);
+        
+        tvMechanical1f2.options.Add(tvChoiceReturn);
+        tvMechanical1s.options.Add(tvChoiceReturn);
+        
+        tvMechanical2f2.options.Add(tvChoiceReturn);
+        tvMechanical2s2.options.Add(tvChoiceReturn);
 
     }
     public void UpdateDialogOptions()
