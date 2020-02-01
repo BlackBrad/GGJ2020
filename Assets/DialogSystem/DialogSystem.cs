@@ -73,12 +73,14 @@ public struct DialogOption
 };
 
 public delegate DialogRecord RecordGeneratorDelegate();
+public delegate void DialogStateEntryDelegate(DialogSystem system);
 
 public struct DialogState
 {
     public string reply;
     public List<DialogOption> options;
     public RecordGeneratorDelegate recordGenerator;
+    public DialogStateEntryDelegate onStateEntry;
     // Dialog options
     // Modifier
     public DialogState(string _reply)
@@ -86,6 +88,7 @@ public struct DialogState
         reply = _reply;
         options = new List<DialogOption>();
         recordGenerator = null;
+        onStateEntry = null;
     }
 };
 
@@ -117,6 +120,13 @@ public struct DialogRecord
     }
 };
 
+public enum ApplianceKey
+{
+    FaxMachine,
+    Microwave,
+    TV,
+};
+
 public class DialogSystem : MonoBehaviour
 {
     public Dictionary<DialogStateKey, DialogState> m_States =
@@ -137,65 +147,55 @@ public class DialogSystem : MonoBehaviour
 
     public List<DialogRecord> m_Records = new List<DialogRecord>();
 
+    private GameObject m_TaskLayoutGroup = null;
+    private Dictionary<ApplianceKey, TaskUI> m_TaskUIList = new Dictionary<ApplianceKey, TaskUI>();
+    private Dictionary<ApplianceKey, TaskState> m_TaskStates = new Dictionary<ApplianceKey, TaskState>();
+
+    public GameObject m_TaskUIPrefab;
+
+    public void AddTask(ApplianceKey key, string name)
+    {
+        GameObject task = Instantiate(m_TaskUIPrefab, m_TaskLayoutGroup.transform);
+        TaskUI ui = task.GetComponent<TaskUI>();
+        Debug.Assert(ui != null);
+        ui.m_ApplianceName = name;
+        m_TaskUIList.Add(key, ui);
+    }
+
+    public void SetTaskState(ApplianceKey key, TaskState state)
+    {
+        Debug.Assert(m_TaskStates.ContainsKey(key));
+        Debug.Assert(m_TaskUIList.ContainsKey(key));
+
+        m_TaskStates[key] = state;
+        m_TaskUIList[key].SetState(state);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         m_Instance = this;
-
-        GenerateFaxMachineDialogTree();
-        // DialogState introState = new DialogState("Woe is me!");
-        // introState.options.Add(DialogOptionKey.DoYouLikeYourself);
-        // introState.options.Add(DialogOptionKey.HaveYouEverHadADream);
-        // introState.options.Add(DialogOptionKey.Leave);
-
-        // DialogState test1State = new DialogState("Always questions");
-        // test1State.options.Add(DialogOptionKey.LeaveThatToasterAlone);
-        // test1State.options.Add(DialogOptionKey.FailStatCheck);
-        // test1State.options.Add(DialogOptionKey.Leave);
-
-        // DialogState test2State = new DialogState("That you, you, could, could do, .asdadsfsdf");
-        // test2State.options.Add(DialogOptionKey.ErrorError);
-        // test2State.options.Add(DialogOptionKey.Leave);
-
-        // DialogState failStatCheckState = new DialogState("FAILED STAT CHECK!");
-        // failStatCheckState.options.Add(DialogOptionKey.Leave);
-
-        // m_States.Add(DialogStateKey.Intro, introState);
-        // m_States.Add(DialogStateKey.Test1, test1State);
-        // m_States.Add(DialogStateKey.Test2, test2State);
-        // m_States.Add(DialogStateKey.FailedStatCheck, failStatCheckState);
-
-        // DialogOption leave = new DialogOption("<Leave>");
-        // leave.triggerExit = true;
-
-        // DialogOption doYou = new DialogOption("Do you like yourself?");
-        // doYou.success = DialogStateKey.Test1;
-
-        // DialogOption haveYou = new DialogOption( "Have you ever had a dream?");
-        // haveYou.success = DialogStateKey.Test2;
-
-        // DialogOption leaveThat = new DialogOption( "Leave that toaster alone!");
-
-        // DialogOption error = new DialogOption( "Error...Error..Error");
-
-        // DialogOption failStatCheck = new DialogOption("Fail stat check");
-        // failStatCheck.statCheck = DialogOption.CompareA;
-        // failStatCheck.success = DialogStateKey.Test2;
-        // failStatCheck.failure = DialogStateKey.FailedStatCheck;
-
-        // m_DialogOptions.Add(DialogOptionKey.DoYouLikeYourself, doYou);
-        // m_DialogOptions.Add(DialogOptionKey.HaveYouEverHadADream, haveYou);
-        // m_DialogOptions.Add(DialogOptionKey.LeaveThatToasterAlone, leaveThat);
-        // m_DialogOptions.Add(DialogOptionKey.ErrorError, error);
-        // m_DialogOptions.Add(DialogOptionKey.Leave, leave);
-        // m_DialogOptions.Add(DialogOptionKey.FailStatCheck, failStatCheck);
 
         foreach (var button in m_DialogButtons)
         {
             button.Register(this);
         }
 
+        m_TaskLayoutGroup = GameObject.FindWithTag("task_layout_group");
+        Debug.Assert(m_TaskLayoutGroup != null);
+
+        m_TaskStates.Add(ApplianceKey.FaxMachine, TaskState.Incomplete);
+        m_TaskStates.Add(ApplianceKey.Microwave, TaskState.Incomplete);
+        m_TaskStates.Add(ApplianceKey.TV, TaskState.Incomplete);
+
+        AddTask(ApplianceKey.FaxMachine, "fax machine");
+        AddTask(ApplianceKey.Microwave, "microwave");
+        AddTask(ApplianceKey.TV, "TV");
+
+        GenerateFaxMachineDialogTree();
+
         SetState(DialogStateKey.faxIntroState);
+
     }
 
     public void HandleDialogOption(DialogOption option)
@@ -231,11 +231,18 @@ public class DialogSystem : MonoBehaviour
     public void SetState(DialogStateKey key)
     {
         m_CurrentState = key;
+
+        Debug.Assert(m_States.ContainsKey(key));
         DialogState state = m_States[key];
         if (state.recordGenerator != null)
         {
             m_Records.Add(state.recordGenerator());
             DumpRecords();
+        }
+
+        if (state.onStateEntry != null)
+        {
+            state.onStateEntry(this);
         }
 
         m_Reply.text = state.reply;
@@ -263,15 +270,18 @@ public class DialogSystem : MonoBehaviour
         DialogState faxEmpath2f = new DialogState("Frailty thy name is laura");
 
         DialogState faxSeduction1s = new DialogState("After a brief period of dial tones, the fax machine produces a trove of lacivious materials which you promptly store.");
+        faxSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
         DialogState faxSeduction1f = new DialogState("The fax machine begins dailing for the police and threatens to have you license revoked. You change the topic");
 
         DialogState faxSeduction2s = new DialogState("The fax machine hums its appreciation. \"If coilling be the food of love, coil on\". You feel uncomfortable.");
+        faxSeduction2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
         DialogState faxSeduction2f = new DialogState("You accidentally yank the cable, pulling it from the port. You replace the handset, awkwardly stammering an apology while its stoic face stares on.");
 
         DialogState faxMechanical1s = new DialogState("Although you failed to affect any meaningful repair, the fax machine appreciates your consideration.");
         DialogState faxMechanical1f = new DialogState("You mistake the paper feeder as a toner repository, the paper is ruined and so is your ego.");
 
         DialogState faxMechanical2s = new DialogState("The fax machine feels well rested and wakes with a thankful expression on its grotesque face.");
+        faxMechanical2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
         DialogState faxMechanical2f = new DialogState("You press the power button with excessive gusto, thereby installing and unintended speed hole. The fax machine's displeasure is obvious");
 
         
@@ -386,6 +396,7 @@ public class DialogSystem : MonoBehaviour
         }
 
         // For the current state, set dialog options
+        Debug.Assert(m_States.ContainsKey(m_CurrentState));
         DialogState state = m_States[m_CurrentState];
         for (var i = 0; i < state.options.Count; i++)
         {

@@ -9,6 +9,7 @@ public class DialogSceneLoader : MonoBehaviour
     void Awake()
     {
         SceneManager.LoadScene("Scenes/DialogUI", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Scenes/HUD", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame

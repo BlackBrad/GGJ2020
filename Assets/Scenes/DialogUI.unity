@@ -861,6 +861,8 @@ MonoBehaviour:
   - {fileID: 902447965}
   - {fileID: 1528853573}
   m_Reply: {fileID: 2026879175}
+  m_TaskUIPrefab: {fileID: 8128412796065507609, guid: 6319afbc85e7776138a7f32a7385b73c,
+    type: 3}
 --- !u!4 &1353908016
 Transform:
   m_ObjectHideFlags: 0
