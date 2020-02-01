@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Appliance : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public DialogStateKey m_StartingState;
+    public DialogStats m_Stats;
+
+    public int A;
+    public int B;
+    public int C;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        m_Stats.A = A;
+        m_Stats.B = B;
+        m_Stats.C = C;
     }
 }
