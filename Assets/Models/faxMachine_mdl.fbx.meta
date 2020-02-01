@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 45eafd767c1b51d439105d4b1698549b
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: curve1
+    100002: //RootNode
+    100004: faxMachineWIP3:Group15305
+    100006: group
+    100008: pCube24
+    100010: pCube25
+    100012: pCube8
+    100014: pCylinder4
+    100016: pSphere1
+    100018: pSphere2
+    100020: pSphere3
+    100022: pSphere4
+    400000: curve1
+    400002: //RootNode
+    400004: faxMachineWIP3:Group15305
+    400006: group
+    400008: pCube24
+    400010: pCube25
+    400012: pCube8
+    400014: pCylinder4
+    400016: pSphere1
+    400018: pSphere2
+    400020: pSphere3
+    400022: pSphere4
+    2100000: lambert1
+    2100002: phong1
+    2100004: cord_M
+    2100006: lambert2
+    2300000: faxMachineWIP3:Group15305
+    2300002: pCube24
+    2300004: pCube25
+    2300006: pCube8
+    2300008: pCylinder4
+    2300010: pSphere1
+    2300012: pSphere2
+    2300014: pSphere3
+    2300016: pSphere4
+    2300018: //RootNode
+    3300000: faxMachineWIP3:Group15305
+    3300002: pCube24
+    3300004: pCube25
+    3300006: pCube8
+    3300008: pCylinder4
+    3300010: pSphere1
+    3300012: pSphere2
+    3300014: pSphere3
+    3300016: pSphere4
+    3300018: //RootNode
+    4300000: pCube8
+    4300002: pCube24
+    4300004: faxMachineWIP3:Group15305
+    4300006: pSphere1
+    4300008: pSphere2
+    4300010: pSphere3
+    4300012: pSphere4
+    4300014: pCylinder4
+    4300016: pCube25
+    4300018: faxMachine_geo
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cord_M
+    second: {fileID: 2100000, guid: ba559645126fc2940b1a16fd666beb4c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 818ec9b9b3df7994fbcd1286b82368a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: 818ec9b9b3df7994fbcd1286b82368a9, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
