@@ -283,17 +283,17 @@ public class DialogSystem : MonoBehaviour
         DialogState faxEmpath2s = new DialogState("Ah you saucy boy. The course of true love never did run smooth");
         DialogState faxEmpath2f = new DialogState("Frailty thy name is laura");
 
-        DialogState faxSeduction1s = new DialogState("After a brief period of dial tones, the fax machine produces a trove of lacivious materials which you promptly store.");
-        DialogState faxSeduction1f = new DialogState("The fax machine begins dailing for the police and threatens to have you license revoked. You change the topic");
+        DialogState faxSeduction1s = new DialogState("[After a brief period of dial tones, the fax machine produces a trove of lacivious materials which you promptly store.]");
+        DialogState faxSeduction1f = new DialogState("[The fax machine begins dailing for the police and threatens to have you license revoked. You change the topic]");
 
-        DialogState faxSeduction2s = new DialogState("The fax machine hums its appreciation. \"If coilling be the food of love, coil on\". You feel uncomfortable.");
-        DialogState faxSeduction2f = new DialogState("You accidentally yank the cable, pulling it from the port. You replace the handset, awkwardly stammering an apology while its stoic face stares on.");
+        DialogState faxSeduction2s = new DialogState("[The fax machine hums its appreciation.]\n \"If coilling be the food of love, coil on\". You feel uncomfortable.");
+        DialogState faxSeduction2f = new DialogState("[You accidentally yank the cable, pulling it from the port. You replace the handset, awkwardly stammering an apology while its stoic face stares on.]");
 
-        DialogState faxMechanical1s = new DialogState("Although you failed to affect any meaningful repair, the fax machine appreciates your consideration.");
-        DialogState faxMechanical1f = new DialogState("You mistake the paper feeder as a toner repository, the paper is ruined and so is your ego.");
+        DialogState faxMechanical1s = new DialogState("[Although you failed to affect any meaningful repair, the fax machine appreciates your consideration.]");
+        DialogState faxMechanical1f = new DialogState("[You mistake the paper feeder as a toner repository, the paper is ruined and so is your ego.]");
 
-        DialogState faxMechanical2s = new DialogState("The fax machine feels well rested and wakes with a thankful expression on its grotesque face.");
-        DialogState faxMechanical2f = new DialogState("You press the power button with excessive gusto, thereby installing and unintended speed hole. The fax machine's displeasure is obvious");
+        DialogState faxMechanical2s = new DialogState("[The fax machine feels well rested and wakes with a thankful expression on its grotesque face.]");
+        DialogState faxMechanical2f = new DialogState("[You press the power button with excessive gusto, thereby installing and unintended speed hole. The fax machine's displeasure is evident]");
 
         
         m_States.Add(DialogStateKey.faxIntroState, faxIntroState);
