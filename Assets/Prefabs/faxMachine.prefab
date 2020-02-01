@@ -25,7 +25,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d669abb81797bf18af84ca2a6a942a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingState: 0
+  m_StartingState: 1
   A: 1
   B: 2
   C: 2
@@ -41,8 +41,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61db9b7a38fd23f7eaa655a75a547062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsActive: 0
-  m_Speed: 0.01
 --- !u!1001 &147924501198498879
 PrefabInstance:
   m_ObjectHideFlags: 0
