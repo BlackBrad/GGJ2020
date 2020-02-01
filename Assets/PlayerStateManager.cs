@@ -45,6 +45,7 @@ public class PlayerStateManager : MonoBehaviour
                     if (m_State == PlayerState.Moving)
                     {
                         SetState(PlayerState.Speaking);
+                        DialogSystem.m_Instance.SetState(appliance.m_StartingState);
                     }
                 }
             }

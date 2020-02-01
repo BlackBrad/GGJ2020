@@ -63,9 +63,13 @@ public class DialogSystem : MonoBehaviour
 
     public Text m_Reply;
 
+    public static DialogSystem m_Instance = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        m_Instance = this;
+
         DialogState introState = new DialogState("Woe is me!");
         introState.options.Add(DialogOptionKey.DoYouLikeYourself);
         introState.options.Add(DialogOptionKey.HaveYouEverHadADream);
