@@ -22,8 +22,9 @@ public class PlayerStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_FirstPersonController = this.transform.parent.GetComponent<FirstPersonController>();
         m_UiCanvas = GameObject.FindWithTag("ui_canvas");
+        Debug.Assert(m_UiCanvas != null);
+        m_FirstPersonController = this.transform.parent.GetComponent<FirstPersonController>();
         SetState(PlayerState.Moving);
         m_Instance = this;
     }
