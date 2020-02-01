@@ -72,16 +72,20 @@ public struct DialogOption
     }
 };
 
+public delegate DialogRecord RecordGeneratorDelegate();
+
 public struct DialogState
 {
     public string reply;
     public List<DialogOption> options;
+    public RecordGeneratorDelegate recordGenerator;
     // Dialog options
     // Modifier
     public DialogState(string _reply)
     {
         reply = _reply;
         options = new List<DialogOption>();
+        recordGenerator = null;
     }
 };
 
@@ -96,6 +100,20 @@ public struct DialogStats
         A = _A;
         B = _B;
         C = _C;
+    }
+};
+
+public struct DialogRecord
+{
+    public string applianceName;
+    public bool result;
+    public int amount;
+
+    public DialogRecord(string _applianceName, bool _result, int _amount)
+    {
+        applianceName = _applianceName;
+        result = _result;
+        amount = _amount;
     }
 };
 
@@ -116,6 +134,8 @@ public class DialogSystem : MonoBehaviour
 
     public DialogStats m_PlayerStats = new DialogStats(1, 2, 3);
     public DialogStats m_ApplianceStats = new DialogStats(0, 0, 0);
+
+    public List<DialogRecord> m_Records = new List<DialogRecord>();
 
     // Start is called before the first frame update
     void Start()
@@ -199,16 +219,33 @@ public class DialogSystem : MonoBehaviour
         }
     }
 
+    public void DumpRecords()
+    {
+        foreach(var record in m_Records)
+        {
+            string outcome = record.result ? "[FIXED]" : "[DAMAGED]";
+            Debug.Log(record.applianceName + " - " + outcome + " - $" + record.amount);
+        }
+    }
+
     public void SetState(DialogStateKey key)
     {
         m_CurrentState = key;
         DialogState state = m_States[key];
+        if (state.recordGenerator != null)
+        {
+            m_Records.Add(state.recordGenerator());
+            DumpRecords();
+        }
+
         m_Reply.text = state.reply;
         UpdateDialogOptions();
     }
+
     private void GenerateFaxMachineDialogTree(){
 
         DialogState faxIntroState = new DialogState("Oh WOE is ME!");
+        faxIntroState.recordGenerator = () => { return new DialogRecord("FAX MACHINE", false, -240); };
 
         DialogState faxIntroState2 = new  DialogState("T'was a time when Laura had eyes for only me..");
  
