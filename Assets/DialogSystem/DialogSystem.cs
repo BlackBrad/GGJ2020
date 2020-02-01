@@ -9,6 +9,7 @@ public enum DialogStateKey
     Intro,
     Test1,
     Test2,
+    FailedStatCheck,
 };
 
 public enum DialogOptionKey
@@ -18,15 +19,33 @@ public enum DialogOptionKey
     LeaveThatToasterAlone,
     ErrorError,
     Leave,
+    FailStatCheck,
 };
+
+public delegate bool DialogStatCheck(DialogStats playerStats, DialogStats applianceStats);
 
 public struct DialogOption
 {
     public string text;
-    // Transition check
+    public DialogStatCheck statCheck;
     public DialogStateKey success;
     public DialogStateKey failure;
     public bool triggerExit;
+
+    public static bool IgnoreStatCheck(DialogStats playerStats, DialogStats applianceStats)
+    {
+        return true;
+    }
+
+    public static bool FailStatCheck(DialogStats playerStats, DialogStats applianceStats)
+    {
+        return false;
+    }
+
+    public static bool CompareA(DialogStats playerStats, DialogStats applianceStats)
+    {
+        return playerStats.A >= applianceStats.A;
+    }
 
     public DialogOption(string _text)
     {
@@ -34,6 +53,7 @@ public struct DialogOption
         triggerExit = false;
         success = DialogStateKey.Intro;
         failure = DialogStateKey.Intro;
+        statCheck = IgnoreStatCheck;
     }
 };
 
@@ -47,6 +67,20 @@ public struct DialogState
     {
         reply = _reply;
         options = new List<DialogOptionKey>();
+    }
+};
+
+public struct DialogStats
+{
+    public int A;
+    public int B;
+    public int C;
+
+    public DialogStats(int _A, int _B, int _C)
+    {
+        A = _A;
+        B = _B;
+        C = _C;
     }
 };
 
@@ -65,6 +99,9 @@ public class DialogSystem : MonoBehaviour
 
     public static DialogSystem m_Instance = null;
 
+    public DialogStats m_PlayerStats = new DialogStats(1, 2, 3);
+    public DialogStats m_ApplianceStats = new DialogStats(0, 0, 0);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,15 +114,20 @@ public class DialogSystem : MonoBehaviour
 
         DialogState test1State = new DialogState("Always questions");
         test1State.options.Add(DialogOptionKey.LeaveThatToasterAlone);
+        test1State.options.Add(DialogOptionKey.FailStatCheck);
         test1State.options.Add(DialogOptionKey.Leave);
 
         DialogState test2State = new DialogState("That you, you, could, could do, .asdadsfsdf");
         test2State.options.Add(DialogOptionKey.ErrorError);
         test2State.options.Add(DialogOptionKey.Leave);
 
+        DialogState failStatCheckState = new DialogState("FAILED STAT CHECK!");
+        failStatCheckState.options.Add(DialogOptionKey.Leave);
+
         m_States.Add(DialogStateKey.Intro, introState);
         m_States.Add(DialogStateKey.Test1, test1State);
         m_States.Add(DialogStateKey.Test2, test2State);
+        m_States.Add(DialogStateKey.FailedStatCheck, failStatCheckState);
 
         DialogOption leave = new DialogOption("<Leave>");
         leave.triggerExit = true;
@@ -100,11 +142,17 @@ public class DialogSystem : MonoBehaviour
 
         DialogOption error = new DialogOption( "Error...Error..Error");
 
+        DialogOption failStatCheck = new DialogOption("Fail stat check");
+        failStatCheck.statCheck = DialogOption.CompareA;
+        failStatCheck.success = DialogStateKey.Test2;
+        failStatCheck.failure = DialogStateKey.FailedStatCheck;
+
         m_DialogOptions.Add(DialogOptionKey.DoYouLikeYourself, doYou);
         m_DialogOptions.Add(DialogOptionKey.HaveYouEverHadADream, haveYou);
         m_DialogOptions.Add(DialogOptionKey.LeaveThatToasterAlone, leaveThat);
         m_DialogOptions.Add(DialogOptionKey.ErrorError, error);
         m_DialogOptions.Add(DialogOptionKey.Leave, leave);
+        m_DialogOptions.Add(DialogOptionKey.FailStatCheck, failStatCheck);
 
         foreach (var button in m_DialogButtons)
         {
@@ -123,7 +171,16 @@ public class DialogSystem : MonoBehaviour
         }
         else
         {
-            SetState(option.success);
+            if (option.statCheck(m_PlayerStats, m_ApplianceStats))
+            {
+                Debug.Log("Stat check passed!");
+                SetState(option.success);
+            }
+            else
+            {
+                Debug.Log("Stat check failed!");
+                SetState(option.failure);
+            }
         }
     }
 

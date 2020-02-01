@@ -47,6 +47,7 @@ public class PlayerStateManager : MonoBehaviour
                     {
                         SetState(PlayerState.Speaking);
                         DialogSystem.m_Instance.SetState(appliance.m_StartingState);
+                        DialogSystem.m_Instance.m_ApplianceStats = appliance.m_Stats;
                         m_Facer = appliance.GetComponent<FacePlayer>();
                         if (m_Facer != null)
                         {
