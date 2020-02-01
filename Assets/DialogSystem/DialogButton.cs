@@ -8,7 +8,7 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
 {
     public DialogSystem m_System;
     public int m_Index;
-    public DialogOptionKey m_Key;
+    public DialogOption m_Option;
 
     private Text m_TextComponent;
     private string m_Text;
@@ -21,7 +21,7 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        m_System.HandleDialogOption(m_Key);
+        m_System.HandleDialogOption(m_Option);
     }
 
     public void Register(DialogSystem dialogSystem)
@@ -34,10 +34,10 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
         gameObject.SetActive(false);
     }
 
-    public void SetOption(string text, DialogOptionKey key)
+    public void SetOption(string text, DialogOption option)
     {
         m_Text = text;
-        m_Key = key;
+        m_Option = option;
         gameObject.SetActive(true);
 
         UpdateText();
