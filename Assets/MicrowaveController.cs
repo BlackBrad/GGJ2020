@@ -28,10 +28,9 @@ public class MicrowaveController : MonoBehaviour
     public IEnumerator OpenDoorAnimation()
     {
         m_CurrentT = 0.0f;
-        float t = 0.0f;
-        while (t < 1.0f)
+        while (m_CurrentT < m_MaxT)
         {
-            t = Mathf.Clamp(m_CurrentT / m_MaxT, 0.0f, 1.0f);
+            float t = Mathf.Clamp(m_CurrentT / m_MaxT, 0.0f, 1.0f);
             if (t >= 0.9f)
             {
                 m_Light.enabled = true;
@@ -48,12 +47,11 @@ public class MicrowaveController : MonoBehaviour
     public IEnumerator CloseDoorAnimation()
     {
         m_CurrentT = 0.0f;
-        float t = 0.0f;
         m_Light.enabled = false;
 
-        while (t < 1.0f)
+        while (m_CurrentT < m_MaxT)
         {
-            t = Mathf.Clamp(m_CurrentT / m_MaxT, 0.0f, 1.0f);
+            float t = Mathf.Clamp(m_CurrentT / m_MaxT, 0.0f, 1.0f);
             m_CurrentT += Time.deltaTime;
             t = EasingFunctions.InOutQuat(t);
             m_Door.localRotation = Quaternion.Slerp(m_OpenDoorRotation, m_ClosedDoorRotation, t);

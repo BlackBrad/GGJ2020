@@ -51,6 +51,11 @@ public class FacePlayer : MonoBehaviour
         {
             microwaveController.CloseDoor();
         }
+        TvController tvController = GetComponent<TvController>();
+        if (tvController != null)
+        {
+            tvController.SwitchOffScreen();
+        }
         StopAllCoroutines();
         StartCoroutine(RotateToTarget(m_InitialRotation));
     }
@@ -73,6 +78,12 @@ public class FacePlayer : MonoBehaviour
                     if (microwaveController != null)
                     {
                         microwaveController.OpenDoor();
+                    }
+
+                    TvController tvController = GetComponent<TvController>();
+                    if (tvController != null)
+                    {
+                        tvController.SwitchOnScreen();
                     }
                 }
             }
