@@ -16,7 +16,8 @@ public class FacePlayer : MonoBehaviour
             Debug.Assert(player != null);
 
             Quaternion quat = Quaternion.LookRotation(player.transform.position - transform.position, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, quat, m_Speed);
+            Quaternion lerped = Quaternion.Slerp(transform.rotation, quat, m_Speed);
+            transform.rotation = Quaternion.Euler(0.0f, lerped.eulerAngles.y, 0.0f);
         }
     }
 }
