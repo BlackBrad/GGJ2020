@@ -17,6 +17,7 @@ public class PlayerStateManager : MonoBehaviour
     private GameObject m_UiCanvas;
     private FirstPersonController m_FirstPersonController;
     private FacePlayer m_Facer = null;
+    private MicrowaveController m_MicrowaveController = null;
 
     public static PlayerStateManager m_Instance = null;
 
@@ -51,7 +52,7 @@ public class PlayerStateManager : MonoBehaviour
                         m_Facer = appliance.GetComponent<FacePlayer>();
                         if (m_Facer != null)
                         {
-                            m_Facer.m_IsActive = true;
+                            m_Facer.RotateToPlayer();
                         }
                     }
                 }
@@ -74,7 +75,11 @@ public class PlayerStateManager : MonoBehaviour
 
             if (m_Facer != null)
             {
-                m_Facer.m_IsActive = false;
+                m_Facer.RotateAwayFromPlayer();
+            }
+            if (m_MicrowaveController != null)
+            {
+                m_MicrowaveController.CloseDoor();
             }
         }
         else if (state == PlayerState.Speaking)
