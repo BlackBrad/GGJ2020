@@ -16,11 +16,16 @@ public class MainMenuButton : MonoBehaviour, IPointerClickHandler,
 
     private float m_BlendAmount = 0.0f;
     private bool m_IsHovered = false;
+    private AudioSource m_AudioSource;
+
+    public AudioClip m_MouseOverClip;
+    public AudioClip m_ClickClip;
 
     // Start is called before the first frame update
     void Start()
     {
         m_Text = GetComponent<Text>();
+        m_AudioSource = GetComponent<AudioSource>();
         m_InitialColor = m_Text.color;
     }
 
@@ -36,8 +41,18 @@ public class MainMenuButton : MonoBehaviour, IPointerClickHandler,
                 EasingFunctions.InOutQuat(m_BlendAmount));
     }
 
+    void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            m_AudioSource.clip = clip;
+            m_AudioSource.Play();
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
+        PlaySound(m_MouseOverClip);
         m_IsHovered = true;
     }
 
@@ -48,6 +63,7 @@ public class MainMenuButton : MonoBehaviour, IPointerClickHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        PlaySound(m_ClickClip);
         if (m_IsQuitButton)
         {
             Application.Quit();

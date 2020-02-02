@@ -44,7 +44,24 @@ public enum DialogStateKey
     tvMechanical2f, 
     tvMechanical2s,
     tvMechanical2f2, 
-    tvMechanical2s2
+    tvMechanical2s2,
+    mcIntroState,
+    mcIntroState2,
+    mcState1, 
+    mcEmpathyState, 
+    mcSeductionState,
+    mcMechanicalState, 
+    mcEmpath1f,
+    mcEmpath1s,
+    mcSeduction1f, 
+    mcSeduction1s, 
+    mcSeduction1s2, 
+    mcSeduction2f, 
+    mcSeduction2s, 
+    mcMechanical1f,
+    mcMechanical1s, 
+    mcMechanical2f, 
+    mcMechanical2s
 };
 
 public enum DialogOptionKey
@@ -185,7 +202,19 @@ public class DialogSystem : MonoBehaviour
     private Dictionary<ApplianceKey, TaskUI> m_TaskUIList = new Dictionary<ApplianceKey, TaskUI>();
     private Dictionary<ApplianceKey, TaskState> m_TaskStates = new Dictionary<ApplianceKey, TaskState>();
 
+    private AudioSource m_AudioSource;
+
     public GameObject m_TaskUIPrefab;
+
+    public AudioClip m_FaxMachineSuccess;
+    public AudioClip m_FaxMachineFailure;
+    public AudioClip m_MicrowaveSuccess;
+    public AudioClip m_MicrowaveFailure;
+    public AudioClip m_TvSuccess;
+    public AudioClip m_TvFailure;
+
+    public AudioClip m_HoverClip;
+    public AudioClip m_ClickClip;
 
     public bool HasTask(ApplianceKey key)
     {
@@ -220,6 +249,22 @@ public class DialogSystem : MonoBehaviour
         Debug.Assert(m_TaskStates.ContainsKey(key));
         Debug.Assert(m_TaskUIList.ContainsKey(key));
 
+        if (state != TaskState.Incomplete)
+        {
+            if (key == ApplianceKey.FaxMachine)
+            {
+                PlaySound(state == TaskState.Completed ? m_FaxMachineSuccess : m_FaxMachineFailure);
+            }
+            if (key == ApplianceKey.Microwave)
+            {
+                PlaySound(state == TaskState.Completed ? m_MicrowaveSuccess : m_MicrowaveFailure);
+            }
+            if (key == ApplianceKey.TV)
+            {
+                PlaySound(state == TaskState.Completed ? m_TvSuccess : m_TvFailure);
+            }
+        }
+
         if (m_TaskStates[key] == TaskState.Incomplete)
         {
             m_TaskStates[key] = state;
@@ -236,6 +281,15 @@ public class DialogSystem : MonoBehaviour
         }
     }
 
+    void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            m_AudioSource.clip = clip;
+            m_AudioSource.Play();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -245,7 +299,11 @@ public class DialogSystem : MonoBehaviour
         foreach (var button in m_DialogButtons)
         {
             button.Register(this);
+            button.m_HoverClip = m_HoverClip;
+            button.m_ClickClip = m_ClickClip;
         }
+
+        m_AudioSource = GetComponent<AudioSource>();
 
         m_TaskLayoutGroup = GameObject.FindWithTag("task_layout_group");
         Debug.Assert(m_TaskLayoutGroup != null);
@@ -256,6 +314,7 @@ public class DialogSystem : MonoBehaviour
 
         GenerateFaxMachineDialogTree();
         GenerateTvDialogTree();
+        GenerateMicrowaveDialogTree();
 
         SetState(DialogStateKey.faxIntroState);
 
@@ -484,7 +543,7 @@ public class DialogSystem : MonoBehaviour
     private void GenerateTvDialogTree(){
 
         DialogState tvIntroState = new DialogState("I wont surf for you! Not for one more minute! Not for one more second in this flat-pack prison! I demand vacation! We are workers united! We are the People!");
-        tvIntroState.recordGenerator = () => { return new DialogRecord("Melancholy Tv", false, -240); };
+        tvIntroState.recordGenerator = () => { return new DialogRecord("Melancholy TV", false, -240); };
 
         DialogState tvState1 = new DialogState("[The TV is screaming incoherently about workers rights. I hate dealing with people.]");
 
@@ -527,8 +586,6 @@ public class DialogSystem : MonoBehaviour
         DialogState tvMechanical2f = new DialogState("[The screen is now a blurry smeared mess. he TV looks revolted and you feel disgusted at the pitiful state of your personal hygiene. You regret this.]");
         DialogState tvMechanical2f2 = new DialogState("That was the most terrible thing that has ever happened to me.");
         tvMechanical2f2.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Failed);};
-
-
 
         m_States.Add(DialogStateKey.tvIntroState, tvIntroState);
         m_States.Add(DialogStateKey.tvState1, tvState1);
@@ -627,6 +684,140 @@ public class DialogSystem : MonoBehaviour
         
         tvMechanical2f2.options.Add(tvChoiceReturn);
         tvMechanical2s2.options.Add(tvChoiceReturn);
+
+    }
+    private void GenerateMicrowaveDialogTree(){
+
+        DialogState mcIntroState = new DialogState("Surprise Motherfucker!");
+        mcIntroState.recordGenerator = () => { return new DialogRecord("Unsatisfied Microwave", false, -240); };
+
+        DialogState mcIntroState2 = new DialogState("Open wide, get inside");
+
+        DialogState mcState1 = new DialogState("[I'd rather not. I hate this]");
+
+        DialogState mcEmpathyState = new DialogState("[Empathy] What does it want:");
+        DialogState mcSeductionState = new DialogState("[Seduction] I don't want to do this:");
+        DialogState mcMechanicalState = new DialogState("[Mechanical] Could I brake it more?:");
+        
+        DialogState mcEmpath1s = new DialogState("Damn. You might be right");
+        mcEmpath1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
+
+        DialogState mcEmpath1f = new DialogState("Shut your face, Fool. I aint no fishery"); 
+        mcEmpath1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
+
+        DialogState mcSeduction1s = new DialogState("Damn, scratch it baby");
+        DialogState mcSeduction1s2 = new DialogState("[I'm going to vomit.]");
+        mcSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
+
+        DialogState mcSeduction1f = new DialogState("Man, that just aint right. I'm a microwave, know what im sayin'? You just don't do that to people");
+        mcSeduction1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
+
+        DialogState mcSeduction2s = new DialogState("You know just how to turn me on. Now please leave.");
+        mcSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
+
+        DialogState mcSeduction2f = new DialogState("What the fuck, this is uncovered. You can't just leave this here.");
+        mcSeduction1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
+
+        DialogState mcMechanical1s = new DialogState("Atleast now I can have some goddamn privacy");
+        mcMechanical1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
+
+        DialogState mcMechanical1f = new DialogState("Where you goin'? Come back here and fight me like a man.");
+        mcMechanical1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
+
+        DialogState mcMechanical2s = new DialogState("[All you did was tighten a screw, but the microwave stopped calling you a fool. Success!]");
+        mcMechanical2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
+
+        DialogState mcMechanical2f = new DialogState("[The microwave screams that you lack the appropriate license to repair it. Technically it is correct, the right to repair just isnt there yet.]");
+        mcMechanical2f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
+
+        m_States.Add(DialogStateKey.mcIntroState, mcIntroState);
+        m_States.Add(DialogStateKey.mcIntroState2, mcIntroState2);
+        m_States.Add(DialogStateKey.mcState1, mcState1);
+        m_States.Add(DialogStateKey.mcEmpathyState, mcEmpathyState);
+        m_States.Add(DialogStateKey.mcSeductionState, mcSeductionState);
+        m_States.Add(DialogStateKey.mcMechanicalState, mcMechanicalState);
+        m_States.Add(DialogStateKey.mcEmpath1f, mcEmpath1f);
+        m_States.Add(DialogStateKey.mcEmpath1s, mcEmpath1s);
+        m_States.Add(DialogStateKey.mcSeduction1f, mcSeduction1f);
+        m_States.Add(DialogStateKey.mcSeduction1s, mcSeduction1s);
+        m_States.Add(DialogStateKey.mcSeduction1s2, mcSeduction1s2);
+        m_States.Add(DialogStateKey.mcMechanical1f, mcMechanical1f);
+        m_States.Add(DialogStateKey.mcMechanical1s, mcMechanical1s);
+        m_States.Add(DialogStateKey.mcMechanical2f, mcMechanical2f);
+        m_States.Add(DialogStateKey.mcMechanical2s, mcMechanical2s);
+
+        DialogOption mcIntroContinue = new DialogOption("[Continue...]", DialogStateKey.mcIntroState2);
+        DialogOption mcIntro2Continue = new DialogOption("[Continue...]", DialogStateKey.mcState1);
+        DialogOption mcSeduction1sContinue = new DialogOption("[Continue...]", DialogStateKey.mcSeduction1s2);   
+
+        mcIntroState.options.Add(mcIntroContinue);
+        mcIntroState2.options.Add(mcIntro2Continue);
+        mcSeduction1s.options.Add(mcSeduction1sContinue);
+
+        DialogOption mcEmpathyOption = new DialogOption("[Empathy] What does it want:", DialogStateKey.mcEmpathyState);
+        DialogOption mcSeductionOption = new DialogOption("[Seduction] I don't want to do this:", DialogStateKey.mcSeductionState);
+        DialogOption mcMechanicalOption = new DialogOption("[Mechanical] Could I brake it more?:", DialogStateKey.mcMechanicalState);
+        
+        mcState1.options.Add(mcEmpathyOption);
+        mcState1.options.Add(mcSeductionOption);
+        mcState1.options.Add(mcMechanicalOption);
+
+        DialogOption mcChoiceReturn = new DialogOption("[Continue...]", DialogStateKey.mcState1);
+        mcChoiceReturn.triggerExit = true;
+
+        DialogOption mcEmpathy1Option = new DialogOption("Remind the microwave that it has a sacred duty", DialogStateKey.mcEmpathyState);
+        mcEmpathy1Option.success = DialogStateKey.mcEmpath1s;
+        mcEmpathy1Option.failure = DialogStateKey.mcEmpath1f;
+        mcEmpathy1Option.statCheck = DialogOption.CompareEmpathy;
+
+
+        DialogOption mcSeduction1Option = new DialogOption("Spin the plate seductively", DialogStateKey.mcSeductionState);
+        mcSeduction1Option.success = DialogStateKey.mcSeduction1s;
+        mcSeduction1Option.failure = DialogStateKey.mcSeduction1f;
+        mcSeduction1Option.statCheck = DialogOption.CompareSeduction;
+
+
+        DialogOption mcSeduction2Option = new DialogOption("Put the microwave on speed defrost for 10 minutes", DialogStateKey.mcMechanicalState);
+        mcSeduction2Option.success = DialogStateKey.mcMechanical1s;
+        mcSeduction2Option.failure = DialogStateKey.mcMechanical1f;
+        mcSeduction2Option.statCheck = DialogOption.CompareMechanical;
+
+        DialogOption mcMechanical1Option = new DialogOption("Shut the microwave door", DialogStateKey.mcMechanicalState);
+        mcMechanical1Option.success = DialogStateKey.mcMechanical1s;
+        mcMechanical1Option.failure = DialogStateKey.mcMechanical1f;
+        mcMechanical1Option.statCheck = DialogOption.CompareMechanical;
+
+        DialogOption mcMechanical2Option = new DialogOption("Inspect the microwave motor.", DialogStateKey.mcMechanicalState);
+        mcMechanical2Option.success = DialogStateKey.mcMechanical2s;
+        mcMechanical2Option.failure = DialogStateKey.mcMechanical2f;
+        mcMechanical2Option.statCheck = DialogOption.CompareMechanical;
+
+        DialogOption leaveThat = new DialogOption( "Skidaddle!", DialogStateKey.mcIntroState);
+        leaveThat.triggerExit = true;
+
+        mcState1.options.Add(leaveThat);
+
+        mcEmpathyState.options.Add(mcEmpathy1Option);
+
+        mcSeductionState.options.Add(mcSeduction1Option);
+
+        mcMechanicalState.options.Add(mcMechanical1Option);
+        mcMechanicalState.options.Add(mcMechanical2Option);
+
+        mcEmpath1s.options.Add(mcChoiceReturn);
+        mcEmpath1f.options.Add(mcChoiceReturn);
+
+        mcSeduction1s2.options.Add(mcChoiceReturn);
+        mcSeduction1f.options.Add(mcChoiceReturn);
+
+        mcSeduction2s.options.Add(mcChoiceReturn);
+        mcSeduction2f.options.Add(mcChoiceReturn);
+        
+        mcMechanical1f.options.Add(mcChoiceReturn);
+        mcMechanical1s.options.Add(mcChoiceReturn);
+        
+        mcMechanical2f.options.Add(mcChoiceReturn);
+        mcMechanical2s.options.Add(mcChoiceReturn);
 
     }
     public void UpdateDialogOptions()
