@@ -19,6 +19,9 @@ public class PlayerStateManager : MonoBehaviour
     private FirstPersonController m_FirstPersonController;
     private FacePlayer m_Facer = null;
     private MicrowaveController m_MicrowaveController = null;
+    private Camera m_Camera;
+    private float m_InitialFov;
+    private float m_ZoomFov;
 
     public static PlayerStateManager m_Instance = null;
 
@@ -30,6 +33,9 @@ public class PlayerStateManager : MonoBehaviour
         m_FirstPersonController = this.transform.parent.GetComponent<FirstPersonController>();
         SetState(PlayerState.Moving);
         m_Instance = this;
+        m_Camera = GetComponent<Camera>();
+        m_InitialFov = m_Camera.fieldOfView;
+        m_ZoomFov = m_InitialFov - 10.0f;
     }
 
     // Update is called once per frame
@@ -93,7 +99,7 @@ public class PlayerStateManager : MonoBehaviour
             m_FirstPersonController.m_DisableMovement = false;
             m_FirstPersonController.m_MouseLook.SetCursorLock(true);
             m_FirstPersonController.m_MouseLook.UpdateCursorLock();
-            Debug.Log("SetState moving");
+            PlayExitDialogAnimation();
 
             if (m_Facer != null)
             {
@@ -113,9 +119,36 @@ public class PlayerStateManager : MonoBehaviour
             m_FirstPersonController.m_DisableMovement = true;
             m_FirstPersonController.m_MouseLook.SetCursorLock(false);
             m_FirstPersonController.m_MouseLook.UpdateCursorLock();
+            PlayEnterDialogAnimation();
             Debug.Log("SetState speaking");
         }
 
         m_State = state;
+    }
+
+    public void PlayEnterDialogAnimation()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FovAnimation(m_InitialFov, m_ZoomFov));
+    }
+
+    public void PlayExitDialogAnimation()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FovAnimation(m_ZoomFov, m_InitialFov));
+    }
+
+
+    public IEnumerator FovAnimation(float initial, float target)
+    {
+        float currentT = 0.0f;
+        float maxT = 1.9f;
+        while (currentT < maxT)
+        {
+            currentT += Time.deltaTime;
+            float t = Mathf.Clamp(currentT / maxT, 0.0f, 1.0f);
+            m_Camera.fieldOfView = Mathf.Lerp(initial, target, t);
+            yield return new WaitForEndOfFrame();
+        }
     }
 }
