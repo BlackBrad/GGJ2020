@@ -251,7 +251,7 @@ public class DialogSystem : MonoBehaviour
         Debug.Assert(m_TaskLayoutGroup != null);
 
         AddTask(ApplianceKey.FaxMachine, "Repair the fax machine");
-        //AddTask(ApplianceKey.Microwave, "Repair the microwave");
+        AddTask(ApplianceKey.Microwave, "Repair the microwave");
         AddTask(ApplianceKey.TV, "Repair the TV");
 
         GenerateFaxMachineDialogTree();
