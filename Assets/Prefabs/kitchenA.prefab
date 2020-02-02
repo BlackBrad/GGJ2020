@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &4378850642417387901
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5328190475045060109}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 1, z: 1.46}
+  m_Center: {x: 0.62, y: 0.49, z: -0.37}
 --- !u!1001 &5328190475045157039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9,7 +22,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100002, guid: 92747000b0cfc3b47aeaebfc124824e7, type: 3}
       propertyPath: m_Name
-      value: kitchenA_mdl Variant
+      value: kitchenA
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 92747000b0cfc3b47aeaebfc124824e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -73,3 +86,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0bff6abd69cfcf34c9fa14e29bcfb174, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92747000b0cfc3b47aeaebfc124824e7, type: 3}
+--- !u!1 &5328190475045060109 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 92747000b0cfc3b47aeaebfc124824e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5328190475045157039}
+  m_PrefabAsset: {fileID: 0}
