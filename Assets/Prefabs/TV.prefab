@@ -347,9 +347,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartingState: 19
-  A: 0
-  B: 0
-  C: 0
+  m_Key: 2
+  empathy: 0
+  seduction: 0
+  mechanical: 0
 --- !u!1 &2973040285857719575
 GameObject:
   m_ObjectHideFlags: 0

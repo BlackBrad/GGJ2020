@@ -47,13 +47,16 @@ public class PlayerStateManager : MonoBehaviour
                     Debug.Log("Hit appliance");
                     if (m_State == PlayerState.Moving)
                     {
-                        SetState(PlayerState.Speaking);
-                        DialogSystem.m_Instance.SetState(appliance.m_StartingState);
-                        DialogSystem.m_Instance.m_ApplianceStats = appliance.m_Stats;
-                        m_Facer = appliance.GetComponent<FacePlayer>();
-                        if (m_Facer != null)
+                        if (DialogSystem.m_Instance.GetTaskState(appliance.m_Key) == TaskState.Incomplete)
                         {
-                            m_Facer.RotateToPlayer();
+                            SetState(PlayerState.Speaking);
+                            DialogSystem.m_Instance.SetState(appliance.m_StartingState);
+                            DialogSystem.m_Instance.m_ApplianceStats = appliance.m_Stats;
+                            m_Facer = appliance.GetComponent<FacePlayer>();
+                            if (m_Facer != null)
+                            {
+                                m_Facer.RotateToPlayer();
+                            }
                         }
                     }
                 }
@@ -62,10 +65,12 @@ public class PlayerStateManager : MonoBehaviour
                     Door door = hit.collider.gameObject.GetComponent<Door>();
                     if (door != null)
                     {
-                        DialogSystem.m_Instance.SetTaskState(
-                            ApplianceKey.Door, TaskState.Completed);
-                        if (DialogSystem.m_Instance.AreAllTasksComplete())
+                        if (DialogSystem.m_Instance.AreAllTasksComplete() ||
+                                DialogSystem.m_Instance.HasTask(ApplianceKey.Door))
                         {
+                            DialogSystem.m_Instance.SetTaskState(
+                                    ApplianceKey.Door, TaskState.Completed);
+
                             SetState(PlayerState.Speaking);
                             // Enable fade out and change to main menu
                             SceneManager.LoadScene("Scenes/MainMenu", LoadSceneMode.Single);

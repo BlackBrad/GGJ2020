@@ -31,7 +31,7 @@ public class Fader : MonoBehaviour
         }
 
         Debug.Log("Transition to next scene");
-        SceneManager.LoadScene("Scenes/Basic Room", LoadSceneMode.Single);
+        SceneManager.LoadScene("Scenes/FinalStudioApartment", LoadSceneMode.Single);
     }
 
     public void SwitchToScene()

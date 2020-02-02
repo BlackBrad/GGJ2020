@@ -6,15 +6,16 @@ public class Appliance : MonoBehaviour
 {
     public DialogStateKey m_StartingState;
     public DialogStats m_Stats;
+    public ApplianceKey m_Key;
 
-    public int A;
-    public int B;
-    public int C;
+    public int empathy;
+    public int seduction;
+    public int mechanical;
 
     void Start()
     {
-        m_Stats.A = A;
-        m_Stats.B = B;
-        m_Stats.C = C;
+        m_Stats.empathy = empathy;
+        m_Stats.seduction = seduction;
+        m_Stats.mechanical = mechanical;
     }
 }
