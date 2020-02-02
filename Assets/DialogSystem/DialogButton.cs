@@ -24,6 +24,9 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler,
     {
          m_TextComponent = GetComponent<Text>();
          m_AudioSource = GetComponent<AudioSource>();
+         Color color = m_TextComponent.color;
+         color.a = 0.7f;
+         m_TextComponent.color = color;
     }
 
     void PlaySound(AudioClip clip)
@@ -68,9 +71,15 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler,
     public void OnPointerEnter(PointerEventData eventData)
     {
         PlaySound(m_HoverClip);
+        Color color = m_TextComponent.color;
+        color.a = 1.0f;
+        m_TextComponent.color = color;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+         Color color = m_TextComponent.color;
+         color.a = 0.7f;
+         m_TextComponent.color = color;
     }
 }
