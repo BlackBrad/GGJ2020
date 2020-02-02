@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 2481813510669538060}
   - component: {fileID: 8565500688509279281}
   - component: {fileID: 6087820385084359749}
+  - component: {fileID: 1537157602941929516}
   m_Layer: 0
   m_Name: TV
   m_TagString: Untagged
@@ -351,6 +352,25 @@ MonoBehaviour:
   empathy: 0
   seduction: 0
   mechanical: 0
+--- !u!95 &1537157602941929516
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2973040285857719573}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2938b0dc27c913e4ea990b95920d1b8d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2973040285857719575
 GameObject:
   m_ObjectHideFlags: 0

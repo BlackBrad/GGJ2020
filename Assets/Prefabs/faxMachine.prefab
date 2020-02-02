@@ -26,9 +26,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartingState: 1
-  A: 1
-  B: 2
-  C: 2
+  m_Key: 0
+  empathy: 0
+  seduction: 0
+  mechanical: 0
 --- !u!114 &9055140594782627864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +239,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 45eafd767c1b51d439105d4b1698549b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: aaa14079e882adc4c90409151984ac1d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45eafd767c1b51d439105d4b1698549b, type: 3}
 --- !u!1 &9084101531122406462 stripped
