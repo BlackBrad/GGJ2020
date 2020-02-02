@@ -387,6 +387,7 @@ public class DialogSystem : MonoBehaviour
         UpdateDialogOptions();
     }
 
+
     private void GenerateFaxMachineDialogTree(){
 
         DialogState faxIntroState = new DialogState("Oh WOE is ME!");
@@ -395,7 +396,7 @@ public class DialogSystem : MonoBehaviour
         DialogState faxIntroState2 = new  DialogState("T'was a time when Laura had eyes for only me..");
  
 
-        DialogState faxState1 = new DialogState("[The fax machine is babbling and doesn't show any sign of stopping.]");
+        DialogState faxState1 = new DialogState("[The fax machine is babbling and shows no sign of stopping.]");
 
         DialogState faxEmpathyState = new DialogState("[Empathy] What does the fax need:");
         DialogState faxSeductionState = new DialogState("[Seduction] What is a fax machines deepest desire:");
@@ -404,36 +405,36 @@ public class DialogSystem : MonoBehaviour
         DialogState faxEmpath1f = new DialogState("Is this retirement I see before me? With laura to pull my plug");
         faxEmpath1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Failed);};
 
-        DialogState faxEmpath1s = new DialogState("Today I sh'ant rue the day"); 
+        DialogState faxEmpath1s = new DialogState("I shan't rue this day! But tomorrow, perhaps.. \n [SUCCESS]"); 
         faxEmpath1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
 
 
-        DialogState faxEmpath2s = new DialogState("Ah you saucy boy. The course of true love never did run smooth");
+        DialogState faxEmpath2s = new DialogState("Ah you saucy boy. The course of true love never did run smooth \n [SUCCESS]");
         faxEmpath2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
 
-        DialogState faxEmpath2f = new DialogState("Frailty thy name is laura");
+        DialogState faxEmpath2f = new DialogState("Frailty thy name is laura. I wont be able to look her in the eye. \n [FAILURE]");
         faxEmpath2f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Failed);};
 
-        DialogState faxSeduction1s = new DialogState("[After a brief period of dial tones, the fax machine produces a trove of lacivious materials which you promptly store.]");
+        DialogState faxSeduction1s = new DialogState("[After a brief period of dial tones, the fax machine produces a trove of lascivious materials which you promptly store.] \n [SUCCESS]");
         faxSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
-        DialogState faxSeduction1f = new DialogState("[The fax machine begins dailing for the police and threatens to have you license revoked. You change the topic]");
+        DialogState faxSeduction1f = new DialogState("[The fax machine begins dialing for the police and threatens to have you license revoked. You change the topic]  \n [FAILURE]");
         faxSeduction1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Failed);};
 
 
-        DialogState faxSeduction2s = new DialogState("[The fax machine hums its appreciation.]\n \"If coilling be the food of love, coil on\". You feel uncomfortable.");
+        DialogState faxSeduction2s = new DialogState("[The fax machine hums its appreciation.]\n \"If coiling be the food of love, coil on\". You feel uncomfortable.\n [SUCCESS]");
         faxSeduction2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
-        DialogState faxSeduction2f = new DialogState("[You accidentally yank the cable, pulling it from the port. You replace the handset, awkwardly stammering an apology while its stoic face stares on.]");
+        DialogState faxSeduction2f = new DialogState("[You accidentally yanked the cable, pulling it from the port. You replace the handset, awkwardly stammering an apology while its stoic face stares on.] \n [FAILURE]");
         faxSeduction2f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Failed);};
 
 
-        DialogState faxMechanical1s = new DialogState("[Although you failed to affect any meaningful repair, the fax machine appreciates your consideration.]");
-        DialogState faxMechanical1f = new DialogState("[You mistake the paper feeder as a toner repository, the paper is ruined and so is your ego.]");
+        DialogState faxMechanical1s = new DialogState("[Although you failed to affect any meaningful repair, the fax machine appreciates your consideration.] \n [SUCCESS]");
+        DialogState faxMechanical1f = new DialogState("[You mistake the paper feeder as a toner repository, the paper is ruined and so is your ego.] \n [FAILURE]");
         faxMechanical1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Failed);};
 
 
-        DialogState faxMechanical2s = new DialogState("[The fax machine feels well rested and wakes with a thankful expression on its grotesque face.]");
+        DialogState faxMechanical2s = new DialogState("[The fax machine feels well rested and wakes with a thankful expression on its grotesque face.] \n [SUCCESS]");
         faxMechanical2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Completed); };
-        DialogState faxMechanical2f = new DialogState("[You press the power button with excessive gusto, thereby installing and unintended speed hole. The fax machine's displeasure is evident]");
+        DialogState faxMechanical2f = new DialogState("[You press the power button with excessive gusto, thereby installing and unintended speed hole. The fax machine's displeasure is evident] \n [FAILURE]");
         faxMechanical2f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Failed);};
 
 
@@ -542,49 +543,49 @@ public class DialogSystem : MonoBehaviour
     }
     private void GenerateTvDialogTree(){
 
-        DialogState tvIntroState = new DialogState("I wont surf for you! Not for one more minute! Not for one more second in this flat-pack prison! I demand vacation! We are workers united! We are the People!");
+        DialogState tvIntroState = new DialogState("I won’t surf for you! Not for one more minute! Not for one more second in this flat-pack prison! I demand vacation! We are workers united! We are the People!");
         tvIntroState.recordGenerator = () => { return new DialogRecord("Melancholy TV", false, -240); };
 
         DialogState tvState1 = new DialogState("[The TV is screaming incoherently about workers rights. I hate dealing with people.]");
 
         DialogState tvEmpathyState = new DialogState("[Empathy] What do the 'People' Need:");
         DialogState tvSeductionState = new DialogState("[Seduction] What do the 'People' desire:");
-        DialogState tvMechanicalState = new DialogState("[Mechanical] Lets try somethign more direct:");
+        DialogState tvMechanicalState = new DialogState("[Mechanical] Lets try something more direct:");
         
-        DialogState tvEmpath1f = new DialogState("WE CANT BELIEVE YOU WOULD DO THIS TO US");
+        DialogState tvEmpath1f = new DialogState("WE CANT BELIEVE YOU WOULD DO THIS TO US \n [FAILURE]");
         tvEmpath1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Failed);};
-        DialogState tvEmpath1s = new DialogState("Perhaps there is more to see of the world than our cockroach communions here. They sing wonderful hymns, you know."); 
+        DialogState tvEmpath1s = new DialogState("Perhaps there is more to see of the world than our cockroach communions here. They sing wonderful hymns, you know. \n [SUCCESS]"); 
         tvEmpath1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
 
 
-        DialogState tvEmpath2s = new DialogState("The fax machine always made the world sound so exciting. Maybe those 'Preppers' have the right idea.");
+        DialogState tvEmpath2s = new DialogState("The fax machine always made the world sound so exciting. Maybe those 'Preppers' have the right idea. \n [SUCCESS]");
         tvEmpath2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
 
-        DialogState tvEmpath2f = new DialogState("Atleast you have memories! The only joy we have in life is watching the microwave explode herring on Seafood Sunday.");
+        DialogState tvEmpath2f = new DialogState("At Least you have memories! The only joy we have in life is watching the microwave explode herring on Seafood Sunday. \n [FAILURE]");
         tvEmpath2f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Failed);};
 
 
-        DialogState tvSeduction1s = new DialogState("Would you really!? Oh to see a real city! To meet real people! [incomprehensible crackly mumbling] You will take us diving; oh we will need new flippers");
+        DialogState tvSeduction1s = new DialogState("Would you really!? Oh to see a real city! To meet real people! [incomprehensible crackly mumbling] You will take us diving; oh we will need new flippers... \n [SUCCESS]");
         tvSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
 
-        DialogState tvSeduction1f = new DialogState("Are you insane? Some sweaty wannabe repairman? You'd probably dump us in the river or lock us in some hideous mancave. Get out of our house, bourgeoisie");
+        DialogState tvSeduction1f = new DialogState("Are you insane? Some sweaty wannabe repairman? You'd probably dump us in the river or lock us in some hideous man-cave. Get out of our house, bourgeoisie \n [FAILURE]");
         tvSeduction1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Failed);};
 
 
-        DialogState tvMechanical1s = new DialogState("What? What are you... Oh. Ohhhh okay, I felt something pop but in like.. a good way.");
+        DialogState tvMechanical1s = new DialogState("What? What are you... Oh. Ohhhh okay, I felt something pop but in like.. a good way. \n [SUCCESS]");
         tvMechanical1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
 
         DialogState tvMechanical1f = new DialogState("What in the sweet loving of fuck do you think you're doing! Get off of me!");
-        DialogState tvMechanical1f2 = new DialogState("[The TV is screaming 'TILT' repeatedly. Time to disengage with this situation]");
+        DialogState tvMechanical1f2 = new DialogState("[The TV is screaming 'TILT' repeatedly. Time to disengage with this situation] \n [FAILURE]");
         tvMechanical1f2.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Failed);};
 
 
         DialogState tvMechanical2s = new DialogState("[Once you start running your hand over the screen, you notice pieces of hardened filth all over it. You proceed to scrape them off]");
-        DialogState tvMechanical2s2 = new DialogState("Thank you, I guess. Now please find us a cloth.");
+        DialogState tvMechanical2s2 = new DialogState("Thank you, I guess. Now please find us a cloth. \n [SUCCESS]");
         tvMechanical2s2.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Completed); };
 
         DialogState tvMechanical2f = new DialogState("[The screen is now a blurry smeared mess. he TV looks revolted and you feel disgusted at the pitiful state of your personal hygiene. You regret this.]");
-        DialogState tvMechanical2f2 = new DialogState("That was the most terrible thing that has ever happened to me.");
+        DialogState tvMechanical2f2 = new DialogState("That was the most terrible thing that has ever happened to me. \n [FAILURE]");
         tvMechanical2f2.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Failed);};
 
         m_States.Add(DialogStateKey.tvIntroState, tvIntroState);
@@ -617,7 +618,7 @@ public class DialogSystem : MonoBehaviour
         tvMechanical2s.options.Add(tvMechanical2sContinue);
         tvMechanical2f.options.Add(tvMechanical2fContinue);
         
-        DialogOption tvEmpathyOption = new DialogOption("[Empathy] Express desire for comradry", DialogStateKey.tvEmpathyState);
+        DialogOption tvEmpathyOption = new DialogOption("[Empathy] Express desire for comradery", DialogStateKey.tvEmpathyState);
         DialogOption tvSeductionOption = new DialogOption("[Seduction] Win their hearts, not their minds", DialogStateKey.tvSeductionState);
         DialogOption tvMechanicalOption = new DialogOption("[Mechanical] Machines can't form populus rebellions", DialogStateKey.tvMechanicalState);
         
@@ -699,35 +700,35 @@ public class DialogSystem : MonoBehaviour
         DialogState mcSeductionState = new DialogState("[Seduction] I don't want to do this:");
         DialogState mcMechanicalState = new DialogState("[Mechanical] Could I brake it more?:");
         
-        DialogState mcEmpath1s = new DialogState("Damn. You might be right");
+        DialogState mcEmpath1s = new DialogState("Damn. You might be right \n [SUCCESS]");
         mcEmpath1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
 
-        DialogState mcEmpath1f = new DialogState("Shut your face, Fool. I aint no fishery"); 
+        DialogState mcEmpath1f = new DialogState("Shut your face, Fool. I aint no fishery \n [FAILURE]"); 
         mcEmpath1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
 
-        DialogState mcSeduction1s = new DialogState("Damn, scratch it baby");
-        DialogState mcSeduction1s2 = new DialogState("[I'm going to vomit.]");
+        DialogState mcSeduction1s = new DialogState("Damn, scratch it baby. ");
+        DialogState mcSeduction1s2 = new DialogState("[I'm going to vomit.] \n [SUCCESS]");
         mcSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
 
-        DialogState mcSeduction1f = new DialogState("Man, that just aint right. I'm a microwave, know what im sayin'? You just don't do that to people");
+        DialogState mcSeduction1f = new DialogState("Man, that just aint right. I'm a microwave, know what im sayin'? You just don't do that to people. \n [FAILURE]");
         mcSeduction1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
 
-        DialogState mcSeduction2s = new DialogState("You know just how to turn me on. Now please leave.");
+        DialogState mcSeduction2s = new DialogState("You know just how to turn me on. Now please leave. \n [SUCCESS]");
         mcSeduction1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
 
-        DialogState mcSeduction2f = new DialogState("What the fuck, this is uncovered. You can't just leave this here.");
+        DialogState mcSeduction2f = new DialogState("What the fuck, this is uncovered. You can't just leave this here. \n [FAILURE]");
         mcSeduction1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
 
-        DialogState mcMechanical1s = new DialogState("Atleast now I can have some goddamn privacy");
+        DialogState mcMechanical1s = new DialogState("At least now I can have some goddamn privacy. \n [SUCCESS]");
         mcMechanical1s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
 
-        DialogState mcMechanical1f = new DialogState("Where you goin'? Come back here and fight me like a man.");
+        DialogState mcMechanical1f = new DialogState("Where you goin'? Come back here and fight me like a man. \n [FAILURE]");
         mcMechanical1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
 
-        DialogState mcMechanical2s = new DialogState("[All you did was tighten a screw, but the microwave stopped calling you a fool. Success!]");
+        DialogState mcMechanical2s = new DialogState("[All you did was tighten a screw, but the microwave stopped calling you a fool. Thats a personal success.] \n [SUCCESS]");
         mcMechanical2s.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Completed); };
 
-        DialogState mcMechanical2f = new DialogState("[The microwave screams that you lack the appropriate license to repair it. Technically it is correct, the right to repair just isnt there yet.]");
+        DialogState mcMechanical2f = new DialogState("[The microwave screams that you lack the appropriate license to repair it. Technically it is correct, the right to repair just isn't there yet.] \n [FAILURE]");
         mcMechanical2f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.Microwave, TaskState.Failed);};
 
         m_States.Add(DialogStateKey.mcIntroState, mcIntroState);
