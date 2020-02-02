@@ -232,6 +232,22 @@ public class DialogSystem : MonoBehaviour
         Debug.Assert(m_TaskStates.ContainsKey(key));
         Debug.Assert(m_TaskUIList.ContainsKey(key));
 
+        if (state != TaskState.Incomplete)
+        {
+            if (key == ApplianceKey.FaxMachine)
+            {
+                PlaySound(state == TaskState.Completed ? m_FaxMachineSuccess : m_FaxMachineFailure);
+            }
+            if (key == ApplianceKey.Microwave)
+            {
+                PlaySound(state == TaskState.Completed ? m_MicrowaveSuccess : m_MicrowaveFailure);
+            }
+            if (key == ApplianceKey.TV)
+            {
+                PlaySound(state == TaskState.Completed ? m_TvSuccess : m_TvFailure);
+            }
+        }
+
         if (m_TaskStates[key] == TaskState.Incomplete)
         {
             m_TaskStates[key] = state;

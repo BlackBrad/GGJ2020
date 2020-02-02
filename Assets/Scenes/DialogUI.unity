@@ -453,12 +453,14 @@ MonoBehaviour:
   m_Reply: {fileID: 2026879175}
   m_TaskUIPrefab: {fileID: 8128412796065507609, guid: 6319afbc85e7776138a7f32a7385b73c,
     type: 3}
-  m_FaxMachineSuccess: {fileID: 8300000, guid: bd9566abdbf08834281bfb4ea8b92a5d, type: 3}
-  m_FaxMachineFailure: {fileID: 8300000, guid: 03e3bd08a6e70684dbe299a3e185fdd2, type: 3}
-  m_MicrowaveSuccess: {fileID: 0}
-  m_MicrowaveFailure: {fileID: 0}
-  m_TvSuccess: {fileID: 0}
-  m_TvFailure: {fileID: 0}
+  m_FaxMachineSuccess: {fileID: 8300000, guid: fb106541e30caea75b1a68c7245fc51c, type: 3}
+  m_FaxMachineFailure: {fileID: 8300000, guid: 313c9a441bad7e39ca1b8741762543b3, type: 3}
+  m_MicrowaveSuccess: {fileID: 8300000, guid: a38f5a3e7224ed502b67677c9788e99f, type: 3}
+  m_MicrowaveFailure: {fileID: 8300000, guid: 63c340835e00ef98b82f695ed7978f00, type: 3}
+  m_TvSuccess: {fileID: 8300000, guid: 4f1180622b20ecbf0b6f2d0827f05a3d, type: 3}
+  m_TvFailure: {fileID: 8300000, guid: 3432445bbcc741e3f8c62692ec82742d, type: 3}
+  m_HoverClip: {fileID: 8300000, guid: 7c65dfc78b4402bd28202fb4f035e3fb, type: 3}
+  m_ClickClip: {fileID: 8300000, guid: c4ac56de3510c38b5a7ce46f0dbbc837, type: 3}
 --- !u!4 &1353908016
 Transform:
   m_ObjectHideFlags: 0
@@ -1235,6 +1237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_System: {fileID: 0}
   m_Index: 0
+  m_HoverClip: {fileID: 0}
+  m_ClickClip: {fileID: 0}
 --- !u!114 &4943639063832953256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,6 +1253,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_System: {fileID: 0}
   m_Index: 0
+  m_HoverClip: {fileID: 0}
+  m_ClickClip: {fileID: 0}
 --- !u!114 &4943639064036920969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,6 +1269,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_System: {fileID: 0}
   m_Index: 0
+  m_HoverClip: {fileID: 0}
+  m_ClickClip: {fileID: 0}
 --- !u!114 &4943639064334579376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,6 +1285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_System: {fileID: 0}
   m_Index: 0
+  m_HoverClip: {fileID: 0}
+  m_ClickClip: {fileID: 0}
 --- !u!114 &6191856582527127246
 MonoBehaviour:
   m_ObjectHideFlags: 0
