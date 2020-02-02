@@ -31,6 +31,13 @@ public class Fader : MonoBehaviour
         while (m_CurrentTime <= totalTime)
         {
             m_CurrentTime += Time.deltaTime;
+
+            if (Input.anyKey)
+            {
+                m_CurrentTime = totalTime;
+                m_AudioSource.Stop();
+            }
+
             if (m_CurrentTime <= fadeTime)
             {
                 float t = Mathf.Clamp(m_CurrentTime / fadeTime, 0.0f, 1.0f);
