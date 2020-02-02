@@ -25,11 +25,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d669abb81797bf18af84ca2a6a942a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingState: 1
+  m_StartingState: 39
   m_Key: 1
-  empathy: 0
-  seduction: 0
-  mechanical: 0
+  empathy: 1
+  seduction: 1
+  mechanical: 1
 --- !u!114 &2202314743921638196
 MonoBehaviour:
   m_ObjectHideFlags: 0
