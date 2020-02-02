@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class DialogButton : MonoBehaviour, IPointerClickHandler
+public class DialogButton : MonoBehaviour, IPointerClickHandler,
+    IPointerEnterHandler, IPointerExitHandler
 {
     public DialogSystem m_System;
     public int m_Index;
@@ -13,14 +14,30 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
     private Text m_TextComponent;
     private string m_Text;
 
+    public AudioClip m_HoverClip;
+    public AudioClip m_ClickClip;
+
+    private AudioSource m_AudioSource;
+
     // Start is called before the first frame update
     void Start()
     {
          m_TextComponent = GetComponent<Text>();
+         m_AudioSource = GetComponent<AudioSource>();
+    }
+
+    void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            m_AudioSource.clip = clip;
+            m_AudioSource.Play();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        PlaySound(m_ClickClip);
         m_System.HandleDialogOption(m_Option);
     }
 
@@ -46,5 +63,14 @@ public class DialogButton : MonoBehaviour, IPointerClickHandler
     public void UpdateText()
     {
         GetComponent<Text>().text = m_Text;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        PlaySound(m_HoverClip);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
     }
 }

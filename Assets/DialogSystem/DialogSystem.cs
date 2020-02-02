@@ -185,7 +185,19 @@ public class DialogSystem : MonoBehaviour
     private Dictionary<ApplianceKey, TaskUI> m_TaskUIList = new Dictionary<ApplianceKey, TaskUI>();
     private Dictionary<ApplianceKey, TaskState> m_TaskStates = new Dictionary<ApplianceKey, TaskState>();
 
+    private AudioSource m_AudioSource;
+
     public GameObject m_TaskUIPrefab;
+
+    public AudioClip m_FaxMachineSuccess;
+    public AudioClip m_FaxMachineFailure;
+    public AudioClip m_MicrowaveSuccess;
+    public AudioClip m_MicrowaveFailure;
+    public AudioClip m_TvSuccess;
+    public AudioClip m_TvFailure;
+
+    public AudioClip m_HoverClip;
+    public AudioClip m_ClickClip;
 
     public bool HasTask(ApplianceKey key)
     {
@@ -236,6 +248,15 @@ public class DialogSystem : MonoBehaviour
         }
     }
 
+    void PlaySound(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            m_AudioSource.clip = clip;
+            m_AudioSource.Play();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -245,7 +266,11 @@ public class DialogSystem : MonoBehaviour
         foreach (var button in m_DialogButtons)
         {
             button.Register(this);
+            button.m_HoverClip = m_HoverClip;
+            button.m_ClickClip = m_ClickClip;
         }
+
+        m_AudioSource = GetComponent<AudioSource>();
 
         m_TaskLayoutGroup = GameObject.FindWithTag("task_layout_group");
         Debug.Assert(m_TaskLayoutGroup != null);
