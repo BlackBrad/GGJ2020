@@ -26,9 +26,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartingState: 1
-  A: 0
-  B: 3
-  C: 1
+  m_Key: 1
+  empathy: 0
+  seduction: 0
+  mechanical: 0
 --- !u!114 &2202314743921638196
 MonoBehaviour:
   m_ObjectHideFlags: 0

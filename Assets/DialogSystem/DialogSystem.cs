@@ -77,9 +77,22 @@ public struct DialogOption
         return false;
     }
 
-    public static bool CompareA(DialogStats playerStats, DialogStats applianceStats)
+    public static bool CompareEmpathy(DialogStats playerStats, DialogStats applianceStats)
     {
-        return playerStats.A >= applianceStats.A;
+        int test = Random.Range(0, 5);
+        return (playerStats.empathy >= test);
+    }
+
+    public static bool CompareSeduction(DialogStats playerStats, DialogStats applianceStats)
+    {
+        int test = Random.Range(0, 5);
+        return (playerStats.seduction >= test);
+    }
+
+    public static bool CompareMechanical(DialogStats playerStats, DialogStats applianceStats)
+    {
+        int test = Random.Range(0, 5);
+        return (playerStats.mechanical >= test);
     }
 
     public DialogOption(string _text, DialogStateKey  _next)
@@ -114,15 +127,15 @@ public struct DialogState
 
 public struct DialogStats
 {
-    public int A;
-    public int B;
-    public int C;
+    public int empathy;
+    public int seduction;
+    public int mechanical;
 
-    public DialogStats(int _A, int _B, int _C)
+    public DialogStats(int _empathy, int _seductions, int _mechanical)
     {
-        A = _A;
-        B = _B;
-        C = _C;
+        empathy = _empathy;
+        seduction = _seductions;
+        mechanical = _mechanical;
     }
 };
 
@@ -196,20 +209,29 @@ public class DialogSystem : MonoBehaviour
         m_TaskStates.Add(key, TaskState.Incomplete);
     }
 
+    public TaskState GetTaskState(ApplianceKey key)
+    {
+        Debug.Assert(m_TaskStates.ContainsKey(key));
+        return m_TaskStates[key];
+    }
+
     public void SetTaskState(ApplianceKey key, TaskState state)
     {
         Debug.Assert(m_TaskStates.ContainsKey(key));
         Debug.Assert(m_TaskUIList.ContainsKey(key));
 
-        m_TaskStates[key] = state;
-        m_TaskUIList[key].SetState(state);
-
-        if (AreAllTasksComplete())
+        if (m_TaskStates[key] == TaskState.Incomplete)
         {
-            Debug.Log("All tasks completed");
-            if (!m_TaskStates.ContainsKey(ApplianceKey.Door))
+            m_TaskStates[key] = state;
+            m_TaskUIList[key].SetState(state);
+
+            if (AreAllTasksComplete())
             {
-                AddTask(ApplianceKey.Door, "Leave");
+                Debug.Log("All tasks completed");
+                if (!m_TaskStates.ContainsKey(ApplianceKey.Door))
+                {
+                    AddTask(ApplianceKey.Door, "Leave");
+                }
             }
         }
     }
@@ -395,36 +417,36 @@ public class DialogSystem : MonoBehaviour
         DialogOption faxEmpathy1Option = new DialogOption("Remind the fax machine that it is loved", DialogStateKey.faxEmpathyState);
         faxEmpathy1Option.success = DialogStateKey.faxEmpath1s;
         faxEmpathy1Option.failure = DialogStateKey.faxEmpath1f;
-        faxEmpathy1Option.statCheck = DialogOption.CompareA;
+        faxEmpathy1Option.statCheck = DialogOption.CompareEmpathy;
 
 
         DialogOption faxEmpathy2Option = new DialogOption("Sympathize with fax machine about feelings for laura", DialogStateKey.faxEmpathyState);
         faxEmpathy2Option.success = DialogStateKey.faxEmpath2s;
         faxEmpathy2Option.failure = DialogStateKey.faxEmpath2f;
-        faxEmpathy2Option.statCheck = DialogOption.CompareA;
+        faxEmpathy2Option.statCheck = DialogOption.CompareEmpathy;
 
 
         DialogOption faxSeduction1Option = new DialogOption("Make a subtle attempt at seduction", DialogStateKey.faxSeductionState);
         faxSeduction1Option.success = DialogStateKey.faxSeduction1s;
         faxSeduction1Option.failure = DialogStateKey.faxSeduction1f;
-        faxSeduction1Option.statCheck = DialogOption.CompareA;
+        faxSeduction1Option.statCheck = DialogOption.CompareSeduction;
 
         DialogOption faxSeduction2Option = new DialogOption("Curl the phone cord around your finger", DialogStateKey.faxSeductionState);
         faxSeduction2Option.success = DialogStateKey.faxSeduction2s;
         faxSeduction2Option.failure = DialogStateKey.faxSeduction2f;
-        faxSeduction2Option.statCheck = DialogOption.CompareA;
+        faxSeduction2Option.statCheck = DialogOption.CompareSeduction;
 
 
         DialogOption faxMechanical1Option = new DialogOption("Make a subtle attempt to check the toner", DialogStateKey.faxMechanicalState);
         faxMechanical1Option.success = DialogStateKey.faxMechanical1s;
         faxMechanical1Option.failure = DialogStateKey.faxMechanical1f;
-        faxMechanical1Option.statCheck = DialogOption.CompareA;
+        faxMechanical1Option.statCheck = DialogOption.CompareMechanical;
 
 
         DialogOption faxMechanical2Option = new DialogOption("Try turning it on and off again", DialogStateKey.faxMechanicalState);
         faxMechanical2Option.success = DialogStateKey.faxMechanical2s;
         faxMechanical2Option.failure = DialogStateKey.faxMechanical2f;
-        faxMechanical2Option.statCheck = DialogOption.CompareA;
+        faxMechanical2Option.statCheck = DialogOption.CompareMechanical;
 
         DialogOption leaveThat = new DialogOption( "Cheese it!", DialogStateKey.faxIntroState);
         leaveThat.triggerExit = true;
@@ -552,31 +574,31 @@ public class DialogSystem : MonoBehaviour
         DialogOption tvEmpathy1Option = new DialogOption("Recommend your favorite TV shows, maybe it will cheer them up", DialogStateKey.tvEmpathyState);
         tvEmpathy1Option.success = DialogStateKey.tvEmpath1s;
         tvEmpathy1Option.failure = DialogStateKey.tvEmpath1f;
-        tvEmpathy1Option.statCheck = DialogOption.CompareA;
+        tvEmpathy1Option.statCheck = DialogOption.CompareEmpathy;
 
 
         DialogOption tvEmpathy2Option = new DialogOption("Tell the 'People' about all the horrible things you've seen. That will scare them", DialogStateKey.tvEmpathyState);
         tvEmpathy2Option.success = DialogStateKey.tvEmpath2s;
         tvEmpathy2Option.failure = DialogStateKey.tvEmpath2f;
-        tvEmpathy2Option.statCheck = DialogOption.CompareA;
+        tvEmpathy2Option.statCheck = DialogOption.CompareEmpathy;
 
 
         DialogOption tvSeduction1Option = new DialogOption("Promise to take the 'People' to paris", DialogStateKey.tvSeductionState);
         tvSeduction1Option.success = DialogStateKey.tvSeduction1s;
         tvSeduction1Option.failure = DialogStateKey.tvSeduction1f;
-        tvSeduction1Option.statCheck = DialogOption.CompareA;
+        tvSeduction1Option.statCheck = DialogOption.CompareSeduction;
 
 
         DialogOption tvMechanical1Option = new DialogOption("Shake the TV enthusiastically", DialogStateKey.tvMechanicalState);
         tvMechanical1Option.success = DialogStateKey.tvMechanical1s;
         tvMechanical1Option.failure = DialogStateKey.tvMechanical1f;
-        tvMechanical1Option.statCheck = DialogOption.CompareA;
+        tvMechanical1Option.statCheck = DialogOption.CompareMechanical;
 
 
         DialogOption tvMechanical2Option = new DialogOption("Run your greasy hands across the screen. Greasily.", DialogStateKey.tvMechanicalState);
         tvMechanical2Option.success = DialogStateKey.tvMechanical2s;
         tvMechanical2Option.failure = DialogStateKey.tvMechanical2f;
-        tvMechanical2Option.statCheck = DialogOption.CompareA;
+        tvMechanical2Option.statCheck = DialogOption.CompareMechanical;
 
         DialogOption leaveThat = new DialogOption( "Scram!", DialogStateKey.tvIntroState);
         leaveThat.triggerExit = true;
