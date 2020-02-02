@@ -338,9 +338,9 @@ public class DialogSystem : MonoBehaviour
 
         DialogState faxState1 = new DialogState("[The fax machine is babbling and doesn't show any sign of stopping.]");
 
-        DialogState faxEmpathyState = new DialogState("What does the fax need:");
-        DialogState faxSeductionState = new DialogState("What is a fax machines deepest desire:");
-        DialogState faxMechanicalState = new DialogState("Broken machines need fixin':");
+        DialogState faxEmpathyState = new DialogState("[Empathy] What does the fax need:");
+        DialogState faxSeductionState = new DialogState("[Seduction] What is a fax machines deepest desire:");
+        DialogState faxMechanicalState = new DialogState("[Mechanical] Broken machines need fixin':");
         
         DialogState faxEmpath1f = new DialogState("Is this retirement I see before me? With laura to pull my plug");
         faxEmpath1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.FaxMachine, TaskState.Failed);};
@@ -403,9 +403,9 @@ public class DialogSystem : MonoBehaviour
         faxIntroState.options.Add(faxIntroContinue);
         faxIntroState2.options.Add(faxIntroContinue2);
         
-        DialogOption faxEmpathyOption = new DialogOption("Empathize with the machine", DialogStateKey.faxEmpathyState);
-        DialogOption faxSeductionOption = new DialogOption("Attempt a honeypot", DialogStateKey.faxSeductionState);
-        DialogOption faxMechanicalOption = new DialogOption("Ignore it, fax machines cant talk", DialogStateKey.faxMechanicalState);
+        DialogOption faxEmpathyOption = new DialogOption("[Empathy] Empathize with the machine", DialogStateKey.faxEmpathyState);
+        DialogOption faxSeductionOption = new DialogOption("[Seduction] Attempt a honeypot", DialogStateKey.faxSeductionState);
+        DialogOption faxMechanicalOption = new DialogOption("[Mechanical] Ignore it, fax machines cant talk", DialogStateKey.faxMechanicalState);
         
         faxState1.options.Add(faxEmpathyOption);
         faxState1.options.Add(faxSeductionOption);
@@ -488,9 +488,9 @@ public class DialogSystem : MonoBehaviour
 
         DialogState tvState1 = new DialogState("[The TV is screaming incoherently about workers rights. I hate dealing with people.]");
 
-        DialogState tvEmpathyState = new DialogState("What do the 'People' Need:");
-        DialogState tvSeductionState = new DialogState("What do the 'People' desire:");
-        DialogState tvMechanicalState = new DialogState("Lets try somethign more direct:");
+        DialogState tvEmpathyState = new DialogState("[Empathy] What do the 'People' Need:");
+        DialogState tvSeductionState = new DialogState("[Seduction] What do the 'People' desire:");
+        DialogState tvMechanicalState = new DialogState("[Mechanical] Lets try somethign more direct:");
         
         DialogState tvEmpath1f = new DialogState("WE CANT BELIEVE YOU WOULD DO THIS TO US");
         tvEmpath1f.onStateEntry = (system) => { system.SetTaskState(ApplianceKey.TV, TaskState.Failed);};
@@ -560,9 +560,9 @@ public class DialogSystem : MonoBehaviour
         tvMechanical2s.options.Add(tvMechanical2sContinue);
         tvMechanical2f.options.Add(tvMechanical2fContinue);
         
-        DialogOption tvEmpathyOption = new DialogOption("Express desire for comradry", DialogStateKey.tvEmpathyState);
-        DialogOption tvSeductionOption = new DialogOption("Win their hearts, not their minds", DialogStateKey.tvSeductionState);
-        DialogOption tvMechanicalOption = new DialogOption("Machines can't form populus rebellions", DialogStateKey.tvMechanicalState);
+        DialogOption tvEmpathyOption = new DialogOption("[Empathy] Express desire for comradry", DialogStateKey.tvEmpathyState);
+        DialogOption tvSeductionOption = new DialogOption("[Seduction] Win their hearts, not their minds", DialogStateKey.tvSeductionState);
+        DialogOption tvMechanicalOption = new DialogOption("[Mechanical] Machines can't form populus rebellions", DialogStateKey.tvMechanicalState);
         
         tvState1.options.Add(tvEmpathyOption);
         tvState1.options.Add(tvSeductionOption);
